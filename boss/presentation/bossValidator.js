@@ -1,15 +1,26 @@
 const Joi = require('joi')
 
-const schema = Joi.object({
+const postSchema = Joi.object({
   userId: Joi.number().min(1),
   level: Joi.number().min(1),
 })
 
-const validator = (req, res, next) => {
-  const result = schema.validate(req.query)
+const postValidator = (req, res, next) => {
+  const result = postSchema.validate(req.query)
+  next(result, req, res, next)
+}
+
+const patchSchema = Joi.object({
+  userId: Joi.number().min(1),
+  raidRecordId: Joi.number().min(1),
+})
+
+const patchValidator = (req, res, next) => {
+  const result = patchSchema.validate(req.query)
   next(result, req, res, next)
 }
 
 module.exports = {
-  validator,
+  postValidator,
+  patchValidator,
 }
