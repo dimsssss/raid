@@ -98,3 +98,28 @@ paths:
                     example: 1
         '500':
           description: Internal Server Error
+    patch:
+      tags:
+        - bossRaid
+      summary: 보스 raid를 종료합니다.
+      description: 보스 레이드를 종료합니다
+      operationId: finishBossRaid
+      requestBody:
+        description: 보스 레이드 종료시 필요합니다
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+                raidRecordId:
+                  type: integer
+                  example: 1
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+        '500':
+          description: Internal Server Error
