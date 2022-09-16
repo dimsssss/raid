@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const points = sequelize.define(
+  const users = sequelize.define(
     'users',
     {
       userId: {
@@ -36,5 +36,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   )
 
-  return points
+  return users
 }
