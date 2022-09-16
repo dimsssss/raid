@@ -8,7 +8,7 @@ const path = require('path')
 const Sequelize = require('sequelize')
 const basename = path.basename(__filename)
 const config = require('../config/config')
-const domainLocation = `${process.cwd()}/article/domain`
+const domainLocations = [`${process.cwd()}/user/domain`]
 const db = {}
 
 let sequelize
@@ -23,19 +23,21 @@ if (config.use_env_variable) {
   )
 }
 
-fs.readdirSync(domainLocation)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
-    )
-  })
-  .forEach(file => {
-    const model = require(path.join(domainLocation, file))(
-      sequelize,
-      Sequelize.DataTypes,
-    )
-    db[model.name] = model
-  })
+domainLocations.forEach(domainLocation => {
+  fs.readdirSync(domainLocation)
+    .filter(file => {
+      return (
+        file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
+      )
+    })
+    .forEach(file => {
+      const model = require(path.join(domainLocation, file))(
+        sequelize,
+        Sequelize.DataTypes,
+      )
+      db[model.name] = model
+    })
+})
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
