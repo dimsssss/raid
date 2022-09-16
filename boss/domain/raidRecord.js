@@ -1,16 +1,21 @@
 module.exports = (sequelize, DataTypes) => {
-  const users = sequelize.define(
-    'users',
+  const raidRecord = sequelize.define(
+    'raidRecord',
     {
-      userId: {
+      raidRecordId: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
       },
-      userName: {
-        type: DataTypes.STRING,
-        allowNull: true,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      state: {
+        type: DataTypes.ENUM,
+        values: ['enter', 'exit'],
+        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -19,9 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       updatedAt: {
         type: DataTypes.DATE,
-        allowNull: false,
-        onUpdate: DataTypes.NOW,
         defaultValue: DataTypes.NOW,
+        allowNull: false,
       },
       deletedAt: {
         type: DataTypes.DATE,
@@ -36,5 +40,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   )
 
-  return users
+  return raidRecord
 }
