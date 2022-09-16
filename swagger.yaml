@@ -11,6 +11,12 @@ tags:
     externalDocs:
       description: 유저를 생성하고 조회합니다
       url: http://localhost:3000/user
+
+  - name: bossRaid
+    description: boss Raid 대한 API 입니다
+    externalDocs:
+      description: boss Raid에 관한 데이터를 제공합니다
+      url: http://localhost:3000/bossRaid
 paths:
   /user:
     post:
@@ -30,5 +36,29 @@ paths:
                   userId:
                     type: integer
                     example: 1
+        '500':
+          description: Internal Server Error
+  /bossRaid:
+    get:
+      tags:
+        - bossRaid
+      summary: 보스 raid 정보를 가져옵니다
+      description: 보스 레이드 시도가 가능한지 알 수 있습니다
+      operationId: getBossState
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                result1:
+                  value:
+                    canEnter: true
+                result2:
+                  value:
+                    canEnter: false
+                    userId: 1
         '500':
           description: Internal Server Error
