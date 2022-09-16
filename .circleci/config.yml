@@ -36,8 +36,3 @@ jobs:
             cat .env
             npx sequelize-cli db:migrate
             npm run test
-
-workflows:
-  build:
-    jobs:
-      - build:
