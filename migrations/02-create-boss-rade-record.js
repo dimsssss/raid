@@ -1,7 +1,7 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'raidRecord',
+      'raidRecords',
       {
         raidRecordId: {
           type: Sequelize.DataTypes.INTEGER,
@@ -15,7 +15,11 @@ module.exports = {
         },
         state: {
           type: Sequelize.DataTypes.ENUM,
-          values: ['enter', 'exit'],
+          values: ['start', 'end'],
+          allowNull: false,
+        },
+        score: {
+          type: Sequelize.DataTypes.INTEGER,
           allowNull: false,
         },
         createdAt: {
@@ -40,6 +44,6 @@ module.exports = {
     )
   },
   down: queryInterface => {
-    return queryInterface.dropTable('bossRadeHistory')
+    return queryInterface.dropTable('raidRecords')
   },
 }
