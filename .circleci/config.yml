@@ -41,4 +41,3 @@ workflows:
   build:
     jobs:
       - build:
-          context: test
