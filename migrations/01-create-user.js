@@ -4,14 +4,14 @@ module.exports = {
       'users',
       {
         userId: {
-          type: Sequelize.DataTypes.UUID,
+          type: Sequelize.DataTypes.INTEGER,
           primaryKey: true,
-          defaultValue: Sequelize.DataTypes.UUIDV4,
+          autoIncrement: true,
           allowNull: false,
         },
         userName: {
           type: Sequelize.DataTypes.STRING,
-          allowNull: false,
+          allowNull: true,
         },
         createdAt: {
           type: Sequelize.DataTypes.DATE,
@@ -25,8 +25,7 @@ module.exports = {
         },
         deletedAt: {
           type: Sequelize.DataTypes.DATE,
-          defaultValue: Sequelize.NOW,
-          allowNull: false,
+          allowNull: true,
         },
       },
       {

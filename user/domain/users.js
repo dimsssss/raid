@@ -3,14 +3,14 @@ module.exports = (sequelize, DataTypes) => {
     'users',
     {
       userId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
+        autoIncrement: true,
         allowNull: false,
       },
       userName: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: DataTypes.NOW,
         defaultValue: DataTypes.NOW,
       },
-      DELETEDaT: {
+      deletedAt: {
         type: DataTypes.DATE,
         allowNull: true,
       },
