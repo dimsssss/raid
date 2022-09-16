@@ -8,7 +8,6 @@ module.exports = {
   host: process.env.HOST,
   port: process.env.DATABASE_PORT,
   dialect: process.env.DIALECT,
-  timezone: process.env.TIMEZONE,
   pool: {
     min: Number(process.env.MIN),
     max: Number(process.env.MAX),
