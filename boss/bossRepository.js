@@ -17,16 +17,19 @@ const createBossRaidRecord = async record => {
  * @param {*} record
  * @returns
  */
-const deleteRaidRecord = async record => {
+const updateRaidRecord = async record => {
   try {
     const {raidRecords} = db
-    return await raidRecords.destroy({
-      raw: true,
-      where: {
-        raidRecordId: record.raidRecordId,
-        userId: record.userId,
+    return await raidRecords.update(
+      {state: 'end'},
+      {
+        raw: true,
+        where: {
+          raidRecordId: record.raidRecordId,
+          userId: record.userId,
+        },
       },
-    })
+    )
   } catch (err) {
     new ExternalSystemException(err)
   }
@@ -34,5 +37,5 @@ const deleteRaidRecord = async record => {
 
 module.exports = {
   createBossRaidRecord,
-  deleteRaidRecord,
+  updateRaidRecord,
 }
