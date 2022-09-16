@@ -13,7 +13,7 @@ jobs:
           keys:
             - v1-dependency-{{ checksum "package-lock.json" }}
             - v1-dependency-
-      - run: docker run --name=writer -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=writer -p 6603:3306 -d mysql:8.0
+      - run: docker run --name=rade -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=rade -p 6603:3306 -d mysql:8.0
       - node/install:
           node-version: '16.15'
       - run: node --version
@@ -32,12 +32,6 @@ jobs:
             echo "HOST=${HOST}" >> .env
             echo "MAX=${MAX}" >> .env
             echo "MIN=${MIN}" >> .env
-            echo "PASSWORD=${PASSWORD}" >> .env
-            echo "SALT=${SALT}" >> .env
-            echo "SALT_ROUND=${SALT_ROUND}" >> .env
-            echo "TIMEZONE=${TIMEZONE}" >> .env
-            echo "WEATHER_BASE=${WEATHER_BASE}" >> .env
-            echo "WEATHER_API_KEY=${WEATHER_API_KEY}" >> .env
             cat .env
             npx sequelize-cli db:migrate
             npm run test
