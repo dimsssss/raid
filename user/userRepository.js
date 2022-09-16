@@ -9,6 +9,16 @@ const getUser = async userId => {
   }
 }
 
+const createUser = async userId => {
+  try {
+    const {users} = db
+    return await users.create(userId, {raw: true})
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
 module.exports = {
   getUser,
+  createUser,
 }
