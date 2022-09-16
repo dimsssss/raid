@@ -3,11 +3,15 @@ module.exports = {
     return queryInterface.createTable(
       'users',
       {
-        uesrId: {
-          type: Sequelize.DataTypes.UUID,
+        userId: {
+          type: Sequelize.DataTypes.INTEGER,
           primaryKey: true,
-          defaultValue: Sequelize.DataTypes.UUIDV4,
+          autoIncrement: true,
           allowNull: false,
+        },
+        userName: {
+          type: Sequelize.DataTypes.STRING,
+          allowNull: true,
         },
         createdAt: {
           type: Sequelize.DataTypes.DATE,
@@ -21,8 +25,7 @@ module.exports = {
         },
         deletedAt: {
           type: Sequelize.DataTypes.DATE,
-          defaultValue: Sequelize.NOW,
-          allowNull: false,
+          allowNull: true,
         },
       },
       {

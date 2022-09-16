@@ -1,77 +1,24 @@
 openapi: 3.0.3
 info:
-  title: Post API
+  title: rade API
   description: |-
-    설명
+    보스 몬스터를 잡은 결과를 Ranking으로 보여주는 서비스입니다
 servers:
   - url: http://localhost:3000
 tags:
-  - name: freeboard
-    description: 자유 게시판에 대한 게시글 CRUD API
+  - name: user
+    description: 유저에 대한 CR API
     externalDocs:
-      description: Find out more
-      url: http://localhost:3000/freeboard
+      description: 유저를 생성하고 조회합니다
+      url: http://localhost:3000/user
 paths:
-  /freeboard:
-    patch:
-      tags:
-        - freeboard
-      summary: 자유 게시글 수정
-      description: 자유 게시글 내용을 수정합니다
-      operationId: updateFreeArticle
-      requestBody:
-        description: 수정할 게시글 내용이 담겨있습니다
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                id:
-                  type: integer
-                  example: 2
-                title:
-                  type: string
-                  example: '수정한 게시글 입니다'
-                content:
-                  type: string
-                  example: '수정된 게시글 입니다 ㅎㅎㅎㅎ'
-
-        required: true
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: integer
-                example: 1
-
-        '500':
-          description: Internal Server Error
-
+  /user:
     post:
       tags:
-        - freeboard
-      summary: 자유 게시글 등록
-      description: 새로운 게시글을 등록합니다
-      operationId: postArticleToFreeBoard
-      requestBody:
-        description:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user_id:
-                  type: integer
-                  example: 2
-                title:
-                  type: string
-                  example: '첫번째 게시글 등록 입니다'
-                content:
-                  type: string
-                  example: '게시글 등록 하였습니다'
-        required: true
+        - user
+      summary: 유저 등록
+      description: 새로운 유저를 등록합니다
+      operationId: createUser
       responses:
         '200':
           description: Successful operation
@@ -80,94 +27,8 @@ paths:
               schema:
                 type: object
                 properties:
-                  user_id:
+                  userId:
                     type: integer
-                    example: 2
-                  title:
-                    type: string
-                    example: '첫번째 게시글 등록 입니다'
-                  content:
-                    type: string
-                    example: '게시글 등록 하였습니다'
-                  createdAt:
-                    type: string
-                    format: date-time
-                    example: '2022-09-05 05:54:53'
-                  updatedAt:
-                    type: string
-                    format: date-time
-                    example: '2022-09-05 05:54:53'
-        '500':
-          description: Internal Server Error
-
-    delete:
-      tags:
-        - freeboard
-      summary: 자유 게시글 삭제
-      description: 하나의 자유 게시글을 삭제합니다
-      operationId: deleteArticleForFreeBoard
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                user:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      example: 2
-                    grade:
-                      type: integer
-                      example: 2
-                articleId:
-                  type: integer
-                  example: 294
-      responses:
-        '200':
-          description: successful operation
-        '500':
-          description: Internal Server Error
-    get:
-      tags:
-        - freeboard
-      summary: 게시글 조회
-      description: 하나의 게시글을 조회합니다
-      operationId: getArticleForFreeBoard
-      parameters:
-        - name: articleId
-          in: query
-          description: 게시글 아이디
-          required: true
-          explode: true
-          schema:
-            type: integer
-            example: 193
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  user_id:
-                    type: integer
-                    example: 2
-                  title:
-                    type: string
-                    example: '첫번째 게시글 등록 입니다'
-                  content:
-                    type: string
-                    example: '게시글 등록 하였습니다'
-                  createdAt:
-                    type: string
-                    format: date-time
-                    example: '2022-09-05 05:54:53'
-                  updatedAt:
-                    type: string
-                    format: date-time
-                    example: '2022-09-05 05:54:53'
+                    example: 1
         '500':
           description: Internal Server Error
