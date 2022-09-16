@@ -28,6 +28,7 @@ jobs:
             echo "DATABASE=${DATABASE}" >> .env
             echo "DATABASE_PORT=${DATABASE_PORT}" >> .env
             echo "DATABASE_USER=${DATABASE_USER}" >> .env
+            echo "DATABASE_PASSWORD=${DATABASE_PASSWORD}" >> .env            
             echo "DIALECT=${DIALECT}" >> .env
             echo "HOST=${HOST}" >> .env
             echo "MAX=${MAX}" >> .env
