@@ -86,6 +86,6 @@ describe('boss raid 통합테스트', () => {
     }
     await expect(
       bossService.endBossRaid(bossStateCache, record),
-    ).resolves.toEqual(1)
+    ).resolves.toEqual([1])
   })
 })

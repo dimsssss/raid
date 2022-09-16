@@ -23,9 +23,9 @@ const endBossRaid = async (bossStateCache, requestRaids) => {
   if (raidValidator.isExcedTime(bossStateCache.data)) {
     throw new Error()
   }
-  await bossRepository.deleteRaidRecord(bossStateCache.data)
+  const result = await bossRepository.updateRaidRecord(bossStateCache.data)
   dto.setCache(bossStateCache, undefined)
-  return 1
+  return result
 }
 
 module.exports = {
