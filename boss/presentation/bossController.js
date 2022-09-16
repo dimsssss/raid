@@ -1,5 +1,5 @@
 const {StatusCodes, getReasonPhrase} = require('http-status-codes')
-const bossService = require('./bossService')
+const bossService = require('../bossService')
 
 const getBossState = (req, res) => {
   try {
