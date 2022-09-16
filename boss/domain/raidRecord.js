@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const raidRecord = sequelize.define(
-    'raidRecord',
+  const raidRecords = sequelize.define(
+    'raidRecords',
     {
       raidRecordId: {
         type: DataTypes.INTEGER,
@@ -14,7 +14,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       state: {
         type: DataTypes.ENUM,
-        values: ['enter', 'exit'],
+        values: ['start', 'end'],
+        allowNull: false,
+      },
+      score: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -40,5 +44,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   )
 
-  return raidRecord
+  return raidRecords
 }

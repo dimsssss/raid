@@ -23,6 +23,22 @@ const isRaiding = record => {
   return true
 }
 
+const getScoreFor = (bossRaidInformation, level) => {
+  const levelInformation = bossRaidInformation.levels.filter(information => {
+    return level === information.level
+  })
+  return levelInformation[0].score
+}
+
+const crateNewRaidBossRecord = (bossRaidInformation, requestRaids) => {
+  const score = getScoreFor(bossRaidInformation, requestRaids.level)
+  return {
+    userId: requestRaids.userId,
+    state: 'start',
+    score,
+  }
+}
+
 const getBossState = cache => {
   if (cache !== undefined && isRaiding(cache.data)) {
     return {
@@ -35,6 +51,21 @@ const getBossState = cache => {
   }
 }
 
+const setCache = (bossStateCache, result) => {
+  bossStateCache.data = result
+}
+
+const getStartBossInformation = record => {
+  return {
+    isEntered: record.state === 'start',
+    raidRecordId: record.raidRecordId,
+  }
+}
+
 module.exports = {
   getBossState,
+  isRaiding,
+  crateNewRaidBossRecord,
+  setCache,
+  getStartBossInformation,
 }
