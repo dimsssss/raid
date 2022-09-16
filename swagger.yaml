@@ -62,3 +62,39 @@ paths:
                     userId: 1
         '500':
           description: Internal Server Error
+    post:
+      tags:
+        - bossRaid
+      summary: 보스 raid를 시작합니다.
+      description: 보스 레이드를 시작합니다
+      operationId: enterBossRaid
+      requestBody:
+        description: 보스 레이드 시작시 필요합니다
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+                level:
+                  type: integer
+                  example: 1
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isEntered:
+                    type: boolean
+                    example: true
+                  raidRecordId:
+                    type: integer
+                    example: 1
+        '500':
+          description: Internal Server Error
