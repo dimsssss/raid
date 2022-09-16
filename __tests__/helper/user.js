@@ -25,7 +25,7 @@ const createDefaultData = async () => {
 const cleanDatabase = async () => {
   try {
     const {users} = db
-    await users.destroy({where: {}, force: true})
+    await users.destroy({where: {}, force: true, truncate: true})
   } catch (err) {
     throw new Error(err)
   }
