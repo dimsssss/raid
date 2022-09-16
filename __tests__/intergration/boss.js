@@ -3,7 +3,7 @@ describe('boss raid 통합테스트', () => {
   const helper = require('../helper/boss')
   const db = require('../../bin/database')
   let bossStateCache
-
+  let raidRecords
   beforeAll(async () => {
     bossStateCache = {
       bossRaids: {
@@ -24,6 +24,7 @@ describe('boss raid 통합테스트', () => {
         ],
       },
     }
+    raidRecords = await helper.initData()
   })
 
   afterAll(async () => {
@@ -60,5 +61,31 @@ describe('boss raid 통합테스트', () => {
     })
     expect(result.isEntered).toEqual(true)
     expect(record.userId).toEqual(newRecord.userId)
+  })
+
+  test('제한 시간이 초과되고 boss raid를 종료하면 예외를 반환한다', async () => {
+    const exceedTimeRecord = raidRecords[0]
+    bossStateCache.data = exceedTimeRecord
+    const bossService = require('../../boss/bossService')
+    const record = {
+      userId: exceedTimeRecord.userId,
+      raidRecordId: exceedTimeRecord.raidRecordId,
+    }
+    await expect(
+      bossService.endBossRaid(bossStateCache, record),
+    ).rejects.toThrowError(Error)
+  })
+
+  test('boss raid를 종료할 수 있다', async () => {
+    const raidRecord = raidRecords[1]
+    bossStateCache.data = raidRecord
+    const bossService = require('../../boss/bossService')
+    const record = {
+      userId: raidRecord.userId,
+      raidRecordId: raidRecord.raidRecordId,
+    }
+    await expect(
+      bossService.endBossRaid(bossStateCache, record),
+    ).resolves.toEqual(1)
   })
 })
