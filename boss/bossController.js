@@ -13,6 +13,23 @@ const getBossState = (req, res) => {
   }
 }
 
+const enterBossRaid = (validator, req, res) => {
+  try {
+    if (validator.error) {
+      return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
+    }
+
+    const {bossStateCache} = req.app.get('bossStateCache')
+    const result = bossService.getBossState(bossStateCache)
+    return res.status(StatusCodes.OK).send(result)
+  } catch (err) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+  }
+}
+
 module.exports = {
   getBossState,
+  enterBossRaid,
 }
