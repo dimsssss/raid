@@ -39,6 +39,15 @@ const crateNewRaidBossRecord = (bossRaidInformation, requestRaids) => {
   }
 }
 
+const crateEndRaidBossRecord = (bossRaidInformation, requestRaids) => {
+  const score = getScoreFor(bossRaidInformation, requestRaids.level)
+  return {
+    userId: requestRaids.userId,
+    state: 'end',
+    score,
+  }
+}
+
 const getBossState = cache => {
   if (cache !== undefined && isRaiding(cache.data)) {
     return {
@@ -68,4 +77,5 @@ module.exports = {
   crateNewRaidBossRecord,
   setCache,
   getStartBossInformation,
+  crateEndRaidBossRecord,
 }
