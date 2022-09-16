@@ -9,10 +9,10 @@ const getUser = async userId => {
   }
 }
 
-const createUser = async userId => {
+const createUser = async () => {
   try {
     const {users} = db
-    return await users.create(userId, {raw: true})
+    return await users.create({raw: true})
   } catch (err) {
     throw new Error(err)
   }
