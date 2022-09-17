@@ -43,6 +43,14 @@ const createRaidRecord = () => {
       createdAt: '2022-09-16 18:00',
       updatedAt: '2022-09-16 18:00',
     },
+    {
+      raidRecordId: 6,
+      userId: 2,
+      state: 'end',
+      score: 50,
+      createdAt: '2022-09-16 19:00',
+      updatedAt: '2022-09-16 19:03',
+    },
   ]
 }
 const initData = async () => {
@@ -78,11 +86,18 @@ const orderByScore = records => {
         rankInfo.totalScore += record.score
       }
     })
-    ranks.push(rankInfo)
+    if (rankInfo.totalScore !== 0) {
+      ranks.push(rankInfo)
+    }
   })
   ranks.sort((a, b) => {
     return a.totalScore - b.totalScore > 0
   })
+
+  ranks.forEach((rank, index) => {
+    rank.ranking = index
+  })
+
   return ranks
 }
 
