@@ -20,7 +20,7 @@ const enterBossRaid = (validator, req, res) => {
     }
 
     const {bossStateCache} = req.app.get('bossStateCache')
-    const result = bossService.getBossState(bossStateCache)
+    const result = bossService.startBossRaid(bossStateCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
@@ -36,7 +36,7 @@ const finishBossRaid = (validator, req, res) => {
     }
 
     const {bossStateCache} = req.app.get('bossStateCache')
-    const result = bossService.getBossState(bossStateCache)
+    const result = bossService.endBossRaid(bossStateCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
