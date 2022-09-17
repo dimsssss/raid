@@ -64,7 +64,7 @@ describe('boss raid 통합테스트', () => {
   })
 
   test('제한 시간이 초과되고 boss raid를 종료하면 예외를 반환한다', async () => {
-    const exceedTimeRecord = raidRecords[0]
+    const exceedTimeRecord = raidRecords[4]
     bossStateCache.data = exceedTimeRecord
     const bossService = require('../../boss/bossService')
     const record = {
