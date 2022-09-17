@@ -88,4 +88,33 @@ describe('boss raid 통합테스트', () => {
       bossService.endBossRaid(bossStateCache, record),
     ).resolves.toEqual([1])
   })
+
+  test('boss raid를 랭킹을 조회할 수 있다', async () => {
+    const bossService = require('../../boss/bossService')
+    const rankings = await bossService.getRankers(1)
+    const orderedRanks = helper.orderByScore(raidRecords)
+    rankings.forEach((ranking, index) => {
+      expect(ranking.userId).toEqual(orderedRanks[index].userId)
+      expect(Number(ranking.totalScore)).toEqual(orderedRanks[index].totalScore)
+    })
+  })
+
+  test('한명의 유저에 대한 레이드 기록을 조회할 수 있다', async () => {
+    const bossService = require('../../boss/bossService')
+    const userId = 1
+    let userRecordCount = 0
+    const totalScore = raidRecords.reduce((accumulate, record) => {
+      if (record.userId === userId && record.state === 'end') {
+        userRecordCount += 1
+        return accumulate + record.score
+      }
+      return accumulate
+    }, 0)
+
+    const userRaidRecords = await bossService.getUserRaidRecordAndTotalScore(
+      userId,
+    )
+    expect(userRaidRecords.bossRaidHistory.length).toEqual(userRecordCount)
+    expect(userRaidRecords.totalScore).toEqual(totalScore)
+  })
 })
