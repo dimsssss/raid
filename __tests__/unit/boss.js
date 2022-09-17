@@ -1,4 +1,4 @@
-/* global describe test expect */
+/* global describe test expect beforeAll afterAll */
 describe('boss raid 확인 테스트', () => {
   test.each([
     [{}, {canEnter: true}],
@@ -33,7 +33,7 @@ describe('boss raid 확인 테스트', () => {
       {canEnter: true},
     ],
   ])('입력 %p 결과 %p', (stateCache, expected) => {
-    const validateBossRaid = require('../../boss/dto/bossState')
+    const validateBossRaid = require('../../boss/dto/raidRecord')
     expect(validateBossRaid.getBossState(stateCache)).toEqual(expected)
   })
 })

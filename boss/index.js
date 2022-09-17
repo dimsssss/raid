@@ -3,8 +3,9 @@ const router = express.Router()
 const bossController = require('./presentation/bossController')
 const {postValidator, patchValidator} = require('./presentation/bossValidator')
 
+router.get('/topRankerList', bossController.getRankings)
+router.post('/enter', postValidator, bossController.enterBossRaid)
+router.patch('/end', patchValidator, bossController.finishBossRaid)
 router.get('/', bossController.getBossState)
-router.post('/', postValidator, bossController.enterBossRaid)
-router.patch('/', patchValidator, bossController.finishBossRaid)
 
 module.exports = router

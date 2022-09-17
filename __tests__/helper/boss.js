@@ -43,6 +43,14 @@ const createRaidRecord = () => {
       createdAt: '2022-09-16 18:00',
       updatedAt: '2022-09-16 18:00',
     },
+    {
+      raidRecordId: 6,
+      userId: 2,
+      state: 'end',
+      score: 50,
+      createdAt: '2022-09-16 19:00',
+      updatedAt: '2022-09-16 19:03',
+    },
   ]
 }
 const initData = async () => {
@@ -64,7 +72,37 @@ const cleanDatabase = async () => {
   }
 }
 
+const orderByScore = records => {
+  const users = records.map(record => {
+    return record.userId
+  })
+
+  const orderdIds = new Set(users)
+  const ranks = []
+  orderdIds.forEach(id => {
+    const rankInfo = {userId: id, totalScore: 0}
+    records.forEach(record => {
+      if (record.userId === id && record.state === 'end') {
+        rankInfo.totalScore += record.score
+      }
+    })
+    if (rankInfo.totalScore !== 0) {
+      ranks.push(rankInfo)
+    }
+  })
+  ranks.sort((a, b) => {
+    return a.totalScore - b.totalScore > 0
+  })
+
+  ranks.forEach((rank, index) => {
+    rank.ranking = index
+  })
+
+  return ranks
+}
+
 module.exports = {
   initData,
   cleanDatabase,
+  orderByScore,
 }
