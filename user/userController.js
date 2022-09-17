@@ -1,5 +1,6 @@
 const {StatusCodes, getReasonPhrase} = require('http-status-codes')
 const userService = require('./userService')
+const bossService = require('../boss/bossService')
 
 const createUser = async (validator, req, res) => {
   if (validator.error instanceof Error) {
@@ -16,6 +17,23 @@ const createUser = async (validator, req, res) => {
   }
 }
 
+const getUserRaidRecords = async (validator, req, res) => {
+  if (validator.error instanceof Error) {
+    return res.status(StatusCodes.BAD_REQUEST).send(validator.error.details)
+  }
+
+  try {
+    const {userId} = req.params
+    const result = await bossService.getUserRaidRecordAndTotalScore(userId)
+    return res.status(StatusCodes.CREATED).send({userId: result.userId})
+  } catch (err) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+  }
+}
+
 module.exports = {
   createUser,
+  getUserRaidRecords,
 }
