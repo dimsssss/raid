@@ -71,6 +71,16 @@ const getStartBossInformation = record => {
   }
 }
 
+const splitToUserRankingAndAllRanking = (records, userId) => {
+  const myRankingInfo = records.filter(record => {
+    return record.userId === userId
+  })[0]
+  return {
+    topRankerInfoList: records,
+    myRankingInfo,
+  }
+}
+
 module.exports = {
   getBossState,
   isRaiding,
@@ -78,4 +88,5 @@ module.exports = {
   setCache,
   getStartBossInformation,
   crateEndRaidBossRecord,
+  splitToUserRankingAndAllRanking,
 }

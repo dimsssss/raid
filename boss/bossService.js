@@ -1,4 +1,4 @@
-const dto = require('./dto/bossState')
+const dto = require('./dto/raidRecord')
 const bossRepository = require('./bossRepository')
 const raidValidator = require('./RaidValidator')
 
@@ -33,9 +33,15 @@ const getUserRaidRecordAndTotalScore = async userId => {
   return result
 }
 
+const getRankers = async userId => {
+  const result = await bossRepository.findRanker()
+  return dto.splitToUserRankingAndAllRanking(result, userId)
+}
+
 module.exports = {
   getBossState,
   startBossRaid,
   endBossRaid,
   getUserRaidRecordAndTotalScore,
+  getRankers,
 }

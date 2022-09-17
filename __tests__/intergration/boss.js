@@ -88,4 +88,41 @@ describe('boss raid 통합테스트', () => {
       bossService.endBossRaid(bossStateCache, record),
     ).resolves.toEqual([1])
   })
+
+  test('boss raid를 랭킹을 조회할 수 있다', async () => {
+    const bossService = require('../../boss/bossService')
+    const rankings = await bossService.getRankers(1)
+    const orderedRanks = helper.orderByScore(raidRecords)
+
+    rankings.topRankerInfoList.forEach((record, index) => {
+      expect(record.userId).toEqual(orderedRanks[index].userId)
+      expect(Number(record.totalScore)).toEqual(orderedRanks[index].totalScore)
+      expect(record.ranking).toEqual(orderedRanks[index].ranking)
+    })
+
+    expect(rankings.myRankingInfo.userId).toEqual(orderedRanks[0].userId)
+    expect(Number(rankings.myRankingInfo.totalScore)).toEqual(
+      orderedRanks[0].totalScore,
+    )
+    expect(rankings.myRankingInfo.ranking).toEqual(orderedRanks[0].ranking)
+  })
+
+  test('한명의 유저에 대한 레이드 기록을 조회할 수 있다', async () => {
+    const bossService = require('../../boss/bossService')
+    const userId = 1
+    let userRecordCount = 0
+    const totalScore = raidRecords.reduce((accumulate, record) => {
+      if (record.userId === userId && record.state === 'end') {
+        userRecordCount += 1
+        return accumulate + record.score
+      }
+      return accumulate
+    }, 0)
+
+    const userRaidRecords = await bossService.getUserRaidRecordAndTotalScore(
+      userId,
+    )
+    expect(userRaidRecords.bossRaidHistory.length).toEqual(userRecordCount)
+    expect(userRaidRecords.totalScore).toEqual(totalScore)
+  })
 })

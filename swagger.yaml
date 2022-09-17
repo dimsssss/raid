@@ -109,6 +109,34 @@ paths:
                     userId: 1
         '500':
           description: Internal Server Error
+  /bossRaid/topRankerList:
+    get:
+      tags:
+        - bossRaid
+      summary: 보스 raid ranking 정보
+      description: 보스 raid에서 나의 ranking과 전체 랭킹을 조회합니다
+      operationId: getRankings
+      requestBody:
+        description: raid 랭킹 조회시 필요합니다
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                  example: 1
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ranking'
+        '500':
+          description: Internal Server Error
+  /bossRaid/enter:
     post:
       tags:
         - bossRaid
@@ -145,6 +173,7 @@ paths:
                     example: 1
         '500':
           description: Internal Server Error
+  /bossRaid/end:
     patch:
       tags:
         - bossRaid
@@ -170,3 +199,35 @@ paths:
           description: Successful operation
         '500':
           description: Internal Server Error
+
+components:
+  schemas:
+    ranking:
+      type: object
+      properties:
+        topRankerInfoList:
+          type: array
+          items:
+            type: object
+            properties:
+              ranking:
+                type: integer
+                example: 0
+              userId:
+                type: integer
+                example: 1
+              totalScore:
+                type: integer
+                example: 130
+        myRankingInfo:
+          type: object
+          properties:
+            ranking:
+              type: integer
+              example: 0
+            userId:
+              type: integer
+              example: 1
+            totalScore:
+              type: integer
+              example: 130

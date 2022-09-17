@@ -20,7 +20,7 @@ const enterBossRaid = (validator, req, res) => {
     }
 
     const {bossStateCache} = req.app.get('bossStateCache')
-    const result = bossService.getBossState(bossStateCache)
+    const result = bossService.startBossRaid(bossStateCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
@@ -36,7 +36,22 @@ const finishBossRaid = (validator, req, res) => {
     }
 
     const {bossStateCache} = req.app.get('bossStateCache')
-    const result = bossService.getBossState(bossStateCache)
+    const result = bossService.endBossRaid(bossStateCache, validator.value)
+    return res.status(StatusCodes.OK).send(result)
+  } catch (err) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+  }
+}
+
+const getRankings = (validator, req, res) => {
+  try {
+    if (validator.error) {
+      return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
+    }
+
+    const result = bossService.getRankers(validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
@@ -49,4 +64,5 @@ module.exports = {
   getBossState,
   enterBossRaid,
   finishBossRaid,
+  getRankings,
 }
