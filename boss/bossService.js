@@ -28,8 +28,14 @@ const endBossRaid = async (bossStateCache, requestRaids) => {
   return result
 }
 
+const getUserRaidRecordAndTotalScore = async userId => {
+  const result = await bossRepository.findAllUserRecord(userId)
+  return result
+}
+
 module.exports = {
   getBossState,
   startBossRaid,
   endBossRaid,
+  getUserRaidRecordAndTotalScore,
 }
