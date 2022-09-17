@@ -93,10 +93,18 @@ describe('boss raid 통합테스트', () => {
     const bossService = require('../../boss/bossService')
     const rankings = await bossService.getRankers(1)
     const orderedRanks = helper.orderByScore(raidRecords)
-    rankings.forEach((ranking, index) => {
-      expect(ranking.userId).toEqual(orderedRanks[index].userId)
-      expect(Number(ranking.totalScore)).toEqual(orderedRanks[index].totalScore)
+
+    rankings.topRankerInfoList.forEach((record, index) => {
+      expect(record.userId).toEqual(orderedRanks[index].userId)
+      expect(Number(record.totalScore)).toEqual(orderedRanks[index].totalScore)
+      expect(record.ranking).toEqual(orderedRanks[index].ranking)
     })
+
+    expect(rankings.myRankingInfo.userId).toEqual(orderedRanks[0].userId)
+    expect(Number(rankings.myRankingInfo.totalScore)).toEqual(
+      orderedRanks[0].totalScore,
+    )
+    expect(rankings.myRankingInfo.ranking).toEqual(orderedRanks[0].ranking)
   })
 
   test('한명의 유저에 대한 레이드 기록을 조회할 수 있다', async () => {
