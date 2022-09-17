@@ -1,5 +1,7 @@
 const db = require('../bin/database')
 const ExternalSystemException = require('./exception/ExternalSystemException')
+const {sequelize} = db
+const {Op} = db.Sequelize
 
 const createBossRaidRecord = async record => {
   try {
@@ -35,7 +37,49 @@ const updateRaidRecord = async record => {
   }
 }
 
+const findAllUserRecord = async userId => {
+  const {raidRecords} = db
+  return await sequelize
+    .transaction(async transaction => {
+      const userRecords = await raidRecords.findAll({
+        raw: true,
+        transaction,
+        attributes: [
+          'raidRecordId',
+          'score',
+          ['createdAt', 'enterTime'],
+          ['updatedAt', 'endTime'],
+        ],
+        where: {
+          userId,
+          state: {
+            [Op.eq]: 'end',
+          },
+        },
+      })
+
+      const totalScore = await raidRecords.sum('score', {
+        where: {
+          userId,
+          state: {
+            [Op.eq]: 'end',
+          },
+        },
+        transaction,
+        raw: true,
+      })
+      return {
+        totalScore,
+        bossRaidHistory: userRecords,
+      }
+    })
+    .catch(err => {
+      throw new ExternalSystemException(err)
+    })
+}
+
 module.exports = {
   createBossRaidRecord,
   updateRaidRecord,
+  findAllUserRecord,
 }

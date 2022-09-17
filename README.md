@@ -2,9 +2,9 @@
 
 <p align="center">
     <h1 align="center">
-        Rade Ranking API
+        Raid Ranking API
     </h1>
-    <p align="center">게임 보스 레이드 랭킹 정보를 알려주는 API입니다<a href="https://github.com/dimsssss/rade"></a>.</p>
+    <p align="center">게임 보스 레이드 랭킹 정보를 알려주는 API입니다<a href="https://github.com/dimsssss/raid"></a>.</p>
 </p>
 
 <p align="center">
@@ -23,8 +23,8 @@
     <a href="https://sequelize.org/">
         <img alt="sequelize" src="https://img.shields.io/node/v-lts/sequelize?label=sequelize&logo=sequelize">
     </a>
-    <a href="https://dl.circleci.com/status-badge/redirect/gh/dimsssss/rade/tree/main">
-        <img alt="circleci" src="https://dl.circleci.com/status-badge/img/gh/dimsssss/rade/tree/main.svg?style=svg">
+    <a href="https://dl.circleci.com/status-badge/redirect/gh/dimsssss/raid/tree/main">
+        <img alt="circleci" src="https://dl.circleci.com/status-badge/img/gh/dimsssss/raid/tree/main.svg?style=svg">
     </a>
 </p>
 
@@ -33,15 +33,15 @@
 ### 1. 데이터베이스 설치
 
 ```shell
-docker run --name=rade -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=rade -p 6603:3306 -d mysql:latest
+docker run --name=raid -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=raid -p 6603:3306 -d mysql:latest
 ```
 
 ### 2. 웹 서버 설치
 
 ```shell
-git clone https://github.com/dimsssss/rade
+git clone https://github.com/dimsssss/raid
 
-cd rade
+cd raid
 
 npm install
 ```

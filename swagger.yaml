@@ -38,6 +38,53 @@ paths:
                     example: 1
         '500':
           description: Internal Server Error
+  /user/{userId}:
+    get:
+      tags:
+        - user
+      summary: 유저의 보스 레이드 정보 조회
+      description: 유저의 레이드 정보를 가져옵니다
+      operationId: getUserRaidRecords
+      parameters:
+        - name: userId
+          in: path
+          description: 조회하는 레코드의 사용자 아이디
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalScore:
+                    type: integer
+                    example: 30
+                  raidRecords:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        raidRecordId:
+                          type: integer
+                          example: 1
+                        score:
+                          type: integer
+                          example: 30
+                        enterTime:
+                          type: string
+                          format: date-time
+                          example: '2022-09-16 18:00'
+                        endTime:
+                          type: string
+                          format: date-time
+                          example: '2022-09-16 18:03'
+        '500':
+          description: Internal Server Error
   /bossRaid:
     get:
       tags:
