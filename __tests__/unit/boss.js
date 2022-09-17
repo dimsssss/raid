@@ -1,4 +1,4 @@
-/* global describe test expect */
+/* global describe test expect beforeAll afterAll */
 describe('boss raid 확인 테스트', () => {
   test.each([
     [{}, {canEnter: true}],
