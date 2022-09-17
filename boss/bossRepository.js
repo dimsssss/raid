@@ -1,7 +1,8 @@
+const {Sequelize} = require('../bin/database')
 const db = require('../bin/database')
 const ExternalSystemException = require('./exception/ExternalSystemException')
 const {sequelize} = db
-const {Op} = db.Sequelize
+const {Op} = Sequelize
 
 const createBossRaidRecord = async record => {
   try {
@@ -78,8 +79,24 @@ const findAllUserRecord = async userId => {
     })
 }
 
+const findRanker = async () => {
+  try {
+    const rankingRecords = await sequelize.query(
+      `SELECT userId, 
+              SUM(score) AS totalScore, 
+              DENSE_RANK() OVER (ORDER BY SUM(score) DESC) - 1 AS ranking 
+         FROM raidRecords WHERE state = 'end' GROUP BY userId ORDER BY ranking ASC;`,
+      {type: Sequelize.QueryTypes.SELECT, raw: true},
+    )
+    return rankingRecords
+  } catch (err) {
+    throw new ExternalSystemException(err)
+  }
+}
+
 module.exports = {
   createBossRaidRecord,
   updateRaidRecord,
   findAllUserRecord,
+  findRanker,
 }
