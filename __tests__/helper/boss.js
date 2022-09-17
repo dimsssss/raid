@@ -64,7 +64,30 @@ const cleanDatabase = async () => {
   }
 }
 
+const orderByScore = records => {
+  const users = records.map(record => {
+    return record.userId
+  })
+
+  const orderdIds = new Set(users)
+  const ranks = []
+  orderdIds.forEach(id => {
+    const rankInfo = {userId: id, totalScore: 0}
+    records.forEach(record => {
+      if (record.userId === id && record.state === 'end') {
+        rankInfo.totalScore += record.score
+      }
+    })
+    ranks.push(rankInfo)
+  })
+  ranks.sort((a, b) => {
+    return a.totalScore - b.totalScore > 0
+  })
+  return ranks
+}
+
 module.exports = {
   initData,
   cleanDatabase,
+  orderByScore,
 }
