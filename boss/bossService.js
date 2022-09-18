@@ -40,8 +40,13 @@ const endBossRaid = async (bossRaidCache, raidRecord) => {
   }
   const result = await bossRepository.updateRaidRecord(bossRaidCache.data)
   const rankRecord = await bossRepository.findRanker()
+  const splitResult = dto.splitToUserRankingAndAllRanking(
+    rankRecord,
+    raidRecord.userId,
+  )
+
   dto.setBossStateCache(bossRaidCache, undefined)
-  dto.setBossRaidRankCache(bossRaidCache, rankRecord)
+  dto.setBossRaidRankCache(bossRaidCache, splitResult)
   return result
 }
 
