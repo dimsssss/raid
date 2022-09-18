@@ -1,12 +1,23 @@
 const dto = require('./dto/raidRecord')
 const bossRepository = require('./bossRepository')
 const raidValidator = require('./RaidValidator')
+
 const NotValidBossRaidRecordException = require('./exception/NotValidBossRaidRecordException')
 const ExcedBossRaidTimeException = require('./exception/ExcedBossRaidTimeException')
 const StartBossRaidException = require('./exception/StartBossRaidException')
+const NotFoundRankingException = require('./exception/NotFoundRankingException')
 
 const getBossState = bossRaidCache => {
-  return dto.getBossState(bossRaidCache)
+  if (
+    !Object.hasOwn(bossRaidCache, 'data') ||
+    bossRaidCache.data === undefined
+  ) {
+    return dto.getPossibleRaidState()
+  }
+  if (raidValidator.isRaiding(bossRaidCache.data)) {
+    return dto.getImpossibleRaidState(bossRaidCache)
+  }
+  return dto.getPossibleRaidState()
 }
 
 const startBossRaid = async (bossRaidCache, requestRaids) => {
@@ -43,8 +54,14 @@ const getUserRaidRecordAndTotalScore = async userId => {
 }
 
 const getRankers = async (bossRaidCache, userId) => {
-  const ranking = bossRaidCache.ranking
-  return dto.splitToUserRankingAndAllRanking(ranking, userId)
+  if (
+    !Object.hasOwn(bossRaidCache, 'ranking') ||
+    bossRaidCache.ranking === undefined
+  ) {
+    throw new NotFoundRankingException()
+  }
+
+  return dto.splitToUserRankingAndAllRanking(bossRaidCache.ranking, userId)
 }
 
 module.exports = {

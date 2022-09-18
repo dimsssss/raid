@@ -1,4 +1,4 @@
-/* global describe test expect beforeAll afterAll */
+/* global describe test expect */
 describe('boss raid 확인 테스트', () => {
   test.each([
     [{}, {canEnter: true}],
@@ -6,7 +6,7 @@ describe('boss raid 확인 테스트', () => {
       {
         data: {
           userId: 1,
-          createdAt: new Date('2022-09-16 18:02').getDate(),
+          createdAt: '2022-09-16 18:02',
           state: 'start',
         },
       },
@@ -33,7 +33,7 @@ describe('boss raid 확인 테스트', () => {
       {canEnter: true},
     ],
   ])('입력 %p 결과 %p', (stateCache, expected) => {
-    const validateBossRaid = require('../../boss/dto/raidRecord')
-    expect(validateBossRaid.getBossState(stateCache)).toEqual(expected)
+    const bossService = require('../../boss/bossService')
+    expect(bossService.getBossState(stateCache)).toEqual(expected)
   })
 })

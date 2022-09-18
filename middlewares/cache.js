@@ -11,7 +11,7 @@ const getRaidRecord = async () => {
 const initRaidRecord = async bossRaidCache => {
   const cacheRecord = await getRaidRecord()
   if (cacheRecord) {
-    bossRaidCache['data'] = cacheRecord
+    bossRaidCache.data = cacheRecord
   }
 }
 
