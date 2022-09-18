@@ -23,15 +23,6 @@ const crateEndRaidBossRecord = (bossRaidInformation, requestRaids) => {
   }
 }
 
-const getBossState = cache => {
-  if (cache !== undefined && isRaiding(cache.data)) {
-    return {
-      canEnter: false,
-      userId: cache.data.userId,
-    }
-  }
-}
-
 const getPossibleRaidState = () => {
   return {
     canEnter: true,
@@ -71,7 +62,6 @@ const splitToUserRankingAndAllRanking = (records, userId) => {
 }
 
 module.exports = {
-  getBossState,
   getPossibleRaidState,
   getImpossibleRaidState,
   crateNewRaidBossRecord,
