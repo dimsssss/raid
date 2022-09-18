@@ -1,6 +1,7 @@
 const dto = require('./dto/raidRecord')
 const bossRepository = require('./bossRepository')
 const raidValidator = require('./RaidValidator')
+
 const NotValidBossRaidRecordException = require('./exception/NotValidBossRaidRecordException')
 const ExcedBossRaidTimeException = require('./exception/ExcedBossRaidTimeException')
 const StartBossRaidException = require('./exception/StartBossRaidException')
@@ -54,8 +55,7 @@ const getRankers = async (bossRaidCache, userId) => {
     throw new NotFoundRankingException()
   }
 
-  const ranking = bossRaidCache.ranking
-  return dto.splitToUserRankingAndAllRanking(ranking, userId)
+  return dto.splitToUserRankingAndAllRanking(bossRaidCache.ranking, userId)
 }
 
 module.exports = {
