@@ -1,15 +1,13 @@
-const {StatusCodes, getReasonPhrase} = require('http-status-codes')
+const {StatusCodes} = require('http-status-codes')
 const bossService = require('../bossService')
 
 const getBossState = async (req, res) => {
   try {
-    const {bossRaidCache} = req.app.get('bossRaidCache')
+    const bossRaidCache = req.app.get('bossRaidCache')
     const result = await bossService.getBossState(bossRaidCache)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+    return res.status(err.StatusCodes).send(err.message)
   }
 }
 
@@ -26,9 +24,7 @@ const enterBossRaid = async (validator, req, res, next) => {
     )
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+    return res.status(err.StatusCodes).send(err.message)
   }
 }
 
@@ -38,28 +34,21 @@ const finishBossRaid = async (validator, req, res) => {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
     }
 
-    const {bossRaidCache} = req.app.get('bossRaidCache')
+    const bossRaidCache = req.app.get('bossRaidCache')
     const result = await bossService.endBossRaid(bossRaidCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+    return res.status(err.StatusCodes).send(err.message)
   }
 }
 
-const getRankings = async (validator, req, res) => {
+const getRankings = async (req, res) => {
   try {
-    if (validator.error) {
-      return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
-    }
-
-    const result = await bossService.getRankers(validator.value)
+    const bossRaidCache = req.app.get('bossRaidCache')
+    const result = await bossService.getRankers(bossRaidCache)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+    return res.status(err.StatusCodes).send(err.message)
   }
 }
 
