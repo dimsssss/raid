@@ -1,4 +1,4 @@
-const {StatusCodes, getReasonPhrase} = require('http-status-codes')
+const {StatusCodes} = require('http-status-codes')
 const bossService = require('../bossService')
 
 const getBossState = async (req, res) => {
@@ -7,9 +7,7 @@ const getBossState = async (req, res) => {
     const result = await bossService.getBossState(bossRaidCache)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+    return res.status(err.StatusCodes).send(err.message)
   }
 }
 
@@ -26,9 +24,7 @@ const enterBossRaid = async (validator, req, res, next) => {
     )
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+    return res.status(err.StatusCodes).send(err.message)
   }
 }
 
@@ -42,9 +38,7 @@ const finishBossRaid = async (validator, req, res) => {
     const result = await bossService.endBossRaid(bossRaidCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+    return res.status(err.StatusCodes).send(err.message)
   }
 }
 
