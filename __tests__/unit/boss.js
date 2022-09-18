@@ -6,7 +6,7 @@ describe('boss raid 확인 테스트', () => {
       {
         data: {
           userId: 1,
-          createdAt: new Date('2022-09-16 18:02').getDate(),
+          createdAt: '2022-09-16 18:02',
           state: 'start',
         },
       },
