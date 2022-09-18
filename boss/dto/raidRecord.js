@@ -64,7 +64,7 @@ const setCache = (bossStateCache, result) => {
   bossStateCache.data = result
 }
 
-const getStartBossInformation = record => {
+const getStartBossRaidInformation = record => {
   return {
     isEntered: record.state === 'start',
     raidRecordId: record.raidRecordId,
@@ -86,7 +86,7 @@ module.exports = {
   isRaiding,
   crateNewRaidBossRecord,
   setCache,
-  getStartBossInformation,
+  getStartBossRaidInformation,
   crateEndRaidBossRecord,
   splitToUserRankingAndAllRanking,
 }
