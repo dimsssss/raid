@@ -50,8 +50,33 @@ const isExcedTime = record => {
   return false
 }
 
+const hasRankingData = bossRaidCache => {
+  const NotFoundRankingException = require('./exception/NotFoundRankingException')
+
+  if (
+    !Object.hasOwn(bossRaidCache, 'ranking') ||
+    bossRaidCache.ranking === undefined ||
+    !Array.isArray(bossRaidCache.ranking.topRankerInfoList) ||
+    bossRaidCache.ranking.topRankerInfoList.length === 0
+  ) {
+    throw new NotFoundRankingException()
+  }
+}
+
+const hasLatestRaidRecord = bossRaidCache => {
+  if (
+    !Object.hasOwn(bossRaidCache, 'data') ||
+    bossRaidCache.data === undefined
+  ) {
+    return false
+  }
+  return true
+}
+
 module.exports = {
   isValid,
   isRaiding,
   isExcedTime,
+  hasRankingData,
+  hasLatestRaidRecord,
 }

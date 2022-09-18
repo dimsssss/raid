@@ -10,6 +10,9 @@ describe('boss raid 통합테스트', () => {
       const bossState = await bossStateAPI.getBossState()
       bossRaidCache = {
         bossState: bossState.bossRaids[0],
+        ranking: {
+          topRankerInfoList: [],
+        },
       }
     } catch (err) {
       throw new Error(err)
@@ -72,23 +75,27 @@ describe('boss raid 통합테스트', () => {
   })
 
   test('boss raid를 종료할 수 있다', async () => {
-    const raidRecord = raidRecords[1]
-    bossRaidCache.data = raidRecord
+    const raidRecord = raidRecords[6]
+    const newBossRaidCache = Object.assign(bossRaidCache)
+    newBossRaidCache.data = raidRecord
     const bossService = require('../../boss/bossService')
     const record = {
       userId: raidRecord.userId,
       raidRecordId: raidRecord.raidRecordId,
     }
+
     await expect(
-      bossService.endBossRaid(bossRaidCache, record),
+      bossService.endBossRaid(newBossRaidCache, record),
     ).resolves.toEqual([1])
   })
 
   test('boss raid를 랭킹을 조회할 수 있다', async () => {
     const bossService = require('../../boss/bossService')
     const orderedRanks = helper.orderByScore(raidRecords)
-    const rankings = await bossService.getRankers({ranking: orderedRanks}, 1)
-
+    const rankings = await bossService.getRankers(
+      {ranking: {topRankerInfoList: orderedRanks}},
+      1,
+    )
     rankings.topRankerInfoList.forEach((record, index) => {
       expect(record.userId).toEqual(orderedRanks[index].userId)
       expect(Number(record.totalScore)).toEqual(orderedRanks[index].totalScore)
