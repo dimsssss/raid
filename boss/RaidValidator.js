@@ -13,14 +13,19 @@ const isRaiding = record => {
     return false
   }
 
-  const raidStartDate = new Date(record.createdAt)
-  raidStartDate.setMinutes(raidStartDate.getMinutes() + 3)
+  const limitTime = getLimitTime(record.createdAt)
 
-  if (record.state === 'start' && Date.now() >= raidStartDate) {
+  if (record.state === 'start' && Date.now() >= limitTime) {
     return false
   }
 
   return true
+}
+
+const getLimitTime = createdAt => {
+  const datetime = new Date(createdAt)
+  datetime.setMinutes(datetime.getMinutes() + 3)
+  return datetime
 }
 
 const isValid = (bossRaidCache, userRaidRecord) => {
