@@ -4,6 +4,8 @@ require('dotenv').config()
 
 const https = require('https')
 const ExternalSystemException = require('../boss/exception/ExternalSystemException')
+const initRaidRecord = require('../middlewares/cache')
+
 const options = {
   hostname: process.env.BOSS_STATE_URL,
   path: `/assignment/backend/bossRaidData.json`,
@@ -23,11 +25,12 @@ const requestBossState = () => {
   })
 }
 
-const setBossState = async app => {
+const setBossStateTo = async bossRaidCache => {
   try {
     const response = await requestBossState()
     const staticBossState = JSON.parse(response)
-    app.set('bossRaidCache', {bossState: staticBossState.bossRaids[0]})
+    bossRaidCache.bossState = staticBossState.bossRaids[0]
+    await initRaidRecord(bossRaidCache)
   } catch (err) {
     throw new ExternalSystemException(err)
   }
@@ -43,6 +46,6 @@ const getBossState = async () => {
 }
 
 module.exports = {
-  setBossState,
+  setBossStateTo,
   getBossState,
 }
