@@ -13,13 +13,13 @@ const getBossState = (req, res) => {
   }
 }
 
-const enterBossRaid = (validator, req, res) => {
+const enterBossRaid = (validator, req, res, next) => {
   try {
     if (validator.error) {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
     }
 
-    const {bossRaidCache} = req.app.get('bossRaidCache')
+    const bossRaidCache = req.app.get('bossRaidCache')
     const result = bossService.startBossRaid(bossRaidCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
