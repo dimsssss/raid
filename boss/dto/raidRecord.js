@@ -52,11 +52,18 @@ const getStartBossRaidInformation = record => {
 }
 
 const splitToUserRankingAndAllRanking = (records, userId) => {
-  const myRankingInfo = records.filter(record => {
+  if (userId === undefined) {
+    return records
+  }
+
+  const record = records.topRankerInfoList.filter(record => {
     return record.userId === userId
   })[0]
+
+  const myRankingInfo = Object.assign(record)
+
   return {
-    topRankerInfoList: records,
+    topRankerInfoList: records.topRankerInfoList,
     myRankingInfo,
   }
 }
