@@ -5,7 +5,6 @@ const raidValidator = require('./RaidValidator')
 const NotValidBossRaidRecordException = require('./exception/NotValidBossRaidRecordException')
 const ExcedBossRaidTimeException = require('./exception/ExcedBossRaidTimeException')
 const StartBossRaidException = require('./exception/StartBossRaidException')
-const NotFoundCacheRecordException = require('./exception/NotFoundCacheRecordException')
 const NotFoundRankingException = require('./exception/NotFoundRankingException')
 
 const getBossState = bossRaidCache => {
@@ -13,7 +12,7 @@ const getBossState = bossRaidCache => {
     !Object.hasOwn(bossRaidCache, 'data') ||
     bossRaidCache.data === undefined
   ) {
-    throw new NotFoundCacheRecordException()
+    return dto.getPossibleRaidState()
   }
   if (raidValidator.isRaiding(bossRaidCache.data)) {
     return dto.getImpossibleRaidState(bossRaidCache)
