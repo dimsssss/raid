@@ -1,6 +1,8 @@
 const dto = require('./dto/raidRecord')
 const bossRepository = require('./bossRepository')
 const raidValidator = require('./RaidValidator')
+const NotValidBossRaidRecord = require('./exception/NotValidBossRaidRecord')
+const ExcedBossRaidTimeException = require('./exception/ExcedBossRaidTimeException')
 
 const getBossState = bossStateCache => {
   return dto.getBossState(bossStateCache)
@@ -13,15 +15,15 @@ const startBossRaid = async (bossStateCache, requestRaids) => {
   )
   const result = await bossRepository.createBossRaidRecord(newRecord)
   dto.setCache(bossStateCache, result)
-  return dto.getStartBossInformation(result)
+  return dto.getStartBossRaidInformation(result)
 }
 
-const endBossRaid = async (bossStateCache, requestRaids) => {
-  if (!raidValidator.isValid(bossStateCache, requestRaids)) {
-    throw new Error()
+const endBossRaid = async (bossStateCache, raidRecord) => {
+  if (!raidValidator.isValid(bossStateCache, raidRecord)) {
+    throw new NotValidBossRaidRecord()
   }
   if (raidValidator.isExcedTime(bossStateCache.data)) {
-    throw new Error()
+    throw new ExcedBossRaidTimeException()
   }
   const result = await bossRepository.updateRaidRecord(bossStateCache.data)
   dto.setCache(bossStateCache, undefined)
