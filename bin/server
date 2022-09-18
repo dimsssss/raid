@@ -6,12 +6,12 @@ const app = require('../app')
 const debug = require('debug')('boiler-express:server')
 const http = require('http')
 
-bossStateAPI.setBossState(app)
+const bossRaidCache = {}
+bossStateAPI.setBossStateTo(bossRaidCache)
 const port = normalizePort(process.env.PORT || '3000')
-
 app.set('port', port)
+app.set('bossRaidCache', bossRaidCache)
 const server = http.createServer(app)
-
 server.listen(port)
 server.on('error', onError)
 server.on('listening', onListening)
