@@ -6,7 +6,7 @@ const postSchema = Joi.object({
 })
 
 const postValidator = (req, res, next) => {
-  const result = postSchema.validate(req.query)
+  const result = postSchema.validate(req.body)
   next(result, req, res, next)
 }
 
