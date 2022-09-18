@@ -51,14 +51,36 @@ const getStartBossRaidInformation = record => {
   }
 }
 
-const splitToUserRankingAndAllRanking = (records, userId) => {
-  const myRankingInfo = records.filter(record => {
+const getUserRanking = (userId, records) => {
+  if (!Object.hasOwn(records, 'topRankerInfoList')) {
+    return records.filter(record => {
+      return record.userId === userId
+    })[0]
+  }
+  return records.topRankerInfoList.filter(record => {
     return record.userId === userId
   })[0]
-  return {
-    topRankerInfoList: records,
-    myRankingInfo,
+}
+
+const splitToUserRankingAndAllRanking = (records, userId) => {
+  if (userId === undefined) {
+    return records
   }
+  const userRanking = getUserRanking(userId, records)
+  const result = {}
+
+  if (userRanking) {
+    const myRankingInfo = Object.assign(userRanking)
+    result.myRankingInfo = myRankingInfo
+  }
+
+  if (!Object.hasOwn(records, 'topRankerInfoList')) {
+    result.topRankerInfoList = records
+  } else {
+    result.topRankerInfoList = records.topRankerInfoList
+  }
+
+  return result
 }
 
 module.exports = {
