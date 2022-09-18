@@ -11,7 +11,7 @@ const getBossState = bossRaidCache => {
 
 const startBossRaid = async (bossRaidCache, requestRaids) => {
   if (raidValidator.isRaiding(bossRaidCache.data)) {
-    throw new StartBossRaidException()
+    throw new StartBossRaidException(requestRaids.userId)
   }
 
   const newRecord = dto.crateNewRaidBossRecord(

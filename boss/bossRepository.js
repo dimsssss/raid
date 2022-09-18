@@ -94,9 +94,24 @@ const findRanker = async () => {
   }
 }
 
+const findLatestRaidRecord = async () => {
+  try {
+    const {raidRecords} = db
+    const result = await raidRecords.findOne({
+      order: [['raidRecordId', 'DESC']],
+      limit: 1,
+      raw: true,
+    })
+    return result
+  } catch (err) {
+    throw new ExternalSystemException(err)
+  }
+}
+
 module.exports = {
   createBossRaidRecord,
   updateRaidRecord,
   findAllUserRecord,
   findRanker,
+  findLatestRaidRecord,
 }

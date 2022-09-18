@@ -1,10 +1,10 @@
 const {StatusCodes, getReasonPhrase} = require('http-status-codes')
 const bossService = require('../bossService')
 
-const getBossState = (req, res) => {
+const getBossState = async (req, res) => {
   try {
     const {bossRaidCache} = req.app.get('bossRaidCache')
-    const result = bossService.getBossState(bossRaidCache)
+    const result = await bossService.getBossState(bossRaidCache)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
@@ -13,14 +13,17 @@ const getBossState = (req, res) => {
   }
 }
 
-const enterBossRaid = (validator, req, res, next) => {
+const enterBossRaid = async (validator, req, res, next) => {
   try {
     if (validator.error) {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
     }
 
     const bossRaidCache = req.app.get('bossRaidCache')
-    const result = bossService.startBossRaid(bossRaidCache, validator.value)
+    const result = await bossService.startBossRaid(
+      bossRaidCache,
+      validator.value,
+    )
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
@@ -29,14 +32,14 @@ const enterBossRaid = (validator, req, res, next) => {
   }
 }
 
-const finishBossRaid = (validator, req, res) => {
+const finishBossRaid = async (validator, req, res) => {
   try {
     if (validator.error) {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
     }
 
     const {bossRaidCache} = req.app.get('bossRaidCache')
-    const result = bossService.endBossRaid(bossRaidCache, validator.value)
+    const result = await bossService.endBossRaid(bossRaidCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
@@ -45,13 +48,13 @@ const finishBossRaid = (validator, req, res) => {
   }
 }
 
-const getRankings = (validator, req, res) => {
+const getRankings = async (validator, req, res) => {
   try {
     if (validator.error) {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
     }
 
-    const result = bossService.getRankers(validator.value)
+    const result = await bossService.getRankers(validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
