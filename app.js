@@ -14,8 +14,6 @@ const swaggerDocument = YAML.load('./swagger.yaml')
 
 const app = express()
 
-app.set('bossRaidCache', {})
-
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser())
