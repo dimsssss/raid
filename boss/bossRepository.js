@@ -95,17 +95,27 @@ const findRanker = async () => {
 }
 
 const findLatestRaidRecord = async () => {
-  try {
-    const {raidRecords} = db
-    const result = await raidRecords.findOne({
-      order: [['raidRecordId', 'DESC']],
-      limit: 1,
-      raw: true,
+  return await sequelize
+    .transaction(async transaction => {
+      const {raidRecords} = db
+      const record = await raidRecords.findOne({
+        order: [['raidRecordId', 'DESC']],
+        limit: 1,
+        raw: true,
+        transaction,
+      })
+      const ranking = await sequelize.query(
+        `SELECT userId, 
+                SUM(score) AS totalScore, 
+                DENSE_RANK() OVER (ORDER BY SUM(score) DESC) - 1 AS ranking 
+           FROM raidRecords WHERE state = 'end' GROUP BY userId ORDER BY ranking ASC;`,
+        {type: Sequelize.QueryTypes.SELECT, raw: true, transaction},
+      )
+      return [record, ranking]
     })
-    return result
-  } catch (err) {
-    throw new ExternalSystemException(err)
-  }
+    .catch(err => {
+      throw new ExternalSystemException(err)
+    })
 }
 
 module.exports = {
