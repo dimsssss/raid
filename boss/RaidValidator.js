@@ -23,12 +23,12 @@ const isRaiding = record => {
   return true
 }
 
-const isValid = (bossStateCache, requestRaids) => {
-  const cachedRaidRecordId = bossStateCache.data.raidRecordId
-  const cachedUserId = bossStateCache.data.userId
+const isValid = (bossRaidCache, userRaidRecord) => {
+  const cachedRaidRecordId = bossRaidCache.data.raidRecordId
+  const cachedUserId = bossRaidCache.data.userId
   if (
-    cachedRaidRecordId === requestRaids.raidRecordId &&
-    cachedUserId === requestRaids.userId
+    cachedRaidRecordId === userRaidRecord.raidRecordId &&
+    cachedUserId === userRaidRecord.userId
   ) {
     return true
   }
