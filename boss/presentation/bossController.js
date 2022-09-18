@@ -3,8 +3,8 @@ const bossService = require('../bossService')
 
 const getBossState = (req, res) => {
   try {
-    const {bossStateCache} = req.app.get('bossStateCache')
-    const result = bossService.getBossState(bossStateCache)
+    const {bossRaidCache} = req.app.get('bossRaidCache')
+    const result = bossService.getBossState(bossRaidCache)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
@@ -19,8 +19,8 @@ const enterBossRaid = (validator, req, res) => {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
     }
 
-    const {bossStateCache} = req.app.get('bossStateCache')
-    const result = bossService.startBossRaid(bossStateCache, validator.value)
+    const {bossRaidCache} = req.app.get('bossRaidCache')
+    const result = bossService.startBossRaid(bossRaidCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
@@ -35,8 +35,8 @@ const finishBossRaid = (validator, req, res) => {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
     }
 
-    const {bossStateCache} = req.app.get('bossStateCache')
-    const result = bossService.endBossRaid(bossStateCache, validator.value)
+    const {bossRaidCache} = req.app.get('bossRaidCache')
+    const result = bossService.endBossRaid(bossRaidCache, validator.value)
     return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res
