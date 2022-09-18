@@ -4,29 +4,30 @@ const raidValidator = require('./RaidValidator')
 const NotValidBossRaidRecordException = require('./exception/NotValidBossRaidRecordException')
 const ExcedBossRaidTimeException = require('./exception/ExcedBossRaidTimeException')
 
-const getBossState = bossStateCache => {
-  return dto.getBossState(bossStateCache)
+const getBossState = bossRaidCache => {
+  return dto.getBossState(bossRaidCache)
 }
 
-const startBossRaid = async (bossStateCache, requestRaids) => {
+const startBossRaid = async (bossRaidCache, requestRaids) => {
   const newRecord = dto.crateNewRaidBossRecord(
-    bossStateCache.bossRaids,
+    bossRaidCache.bossRaids,
     requestRaids,
   )
   const result = await bossRepository.createBossRaidRecord(newRecord)
-  dto.setCache(bossStateCache, result)
+  dto.setCache(bossRaidCache, result)
   return dto.getStartBossRaidInformation(result)
 }
 
-const endBossRaid = async (bossStateCache, raidRecord) => {
-  if (!raidValidator.isValid(bossStateCache, raidRecord)) {
+const endBossRaid = async (bossRaidCache, raidRecord) => {
+  if (!raidValidator.isValid(bossRaidCache, raidRecord)) {
     throw new NotValidBossRaidRecordException()
   }
-  if (raidValidator.isExcedTime(bossStateCache.data)) {
+  if (raidValidator.isExcedTime(bossRaidCache.data)) {
     throw new ExcedBossRaidTimeException()
   }
-  const result = await bossRepository.updateRaidRecord(bossStateCache.data)
-  dto.setCache(bossStateCache, undefined)
+  const result = await bossRepository.updateRaidRecord(bossRaidCache.data)
+  // const cache = await bossRepository.findRanker()
+  dto.setCache(bossRaidCache, undefined)
   return result
 }
 
@@ -35,9 +36,9 @@ const getUserRaidRecordAndTotalScore = async userId => {
   return result
 }
 
-const getRankers = async userId => {
-  const result = await bossRepository.findRanker()
-  return dto.splitToUserRankingAndAllRanking(result, userId)
+const getRankers = async (bossRaidCache, userId) => {
+  const ranking = bossRaidCache.ranking
+  return dto.splitToUserRankingAndAllRanking(ranking, userId)
 }
 
 module.exports = {
