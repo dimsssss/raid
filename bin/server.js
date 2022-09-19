@@ -1,20 +1,17 @@
 #!/usr/bin/env node
 /* global process */
-
-const bossStateAPI = require('./bossStateAPI')
-const app = require('../app')
+require('dotenv').config()
 const debug = require('debug')('boiler-express:server')
 const http = require('http')
 
-const bossRaidCache = {}
-bossStateAPI.setBossStateTo(bossRaidCache)
-const port = normalizePort(process.env.PORT || '3000')
-app.set('port', port)
-app.set('bossRaidCache', bossRaidCache)
-const server = http.createServer(app)
-server.listen(port)
-server.on('error', onError)
-server.on('listening', onListening)
+const createServer = app => {
+  const server = http.createServer(app)
+  const port = normalizePort(process.env.PORT || '3000')
+  server.listen(port)
+  server.on('error', onError.bind(null, port))
+  server.on('listening', onListening.bind(null, server))
+  return port
+}
 
 function normalizePort(val) {
   const port = parseInt(val, 10)
@@ -32,7 +29,7 @@ function normalizePort(val) {
   return false
 }
 
-function onError(error) {
+function onError(error, port) {
   if (error.syscall !== 'listen') {
     throw error
   }
@@ -54,8 +51,12 @@ function onError(error) {
   }
 }
 
-function onListening() {
+function onListening(server) {
   const addr = server.address()
   const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port
   debug('Listening on ' + bind)
+}
+
+module.exports = {
+  createServer,
 }
