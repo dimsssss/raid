@@ -16,7 +16,7 @@ const requestBossState = () => {
     const req = https.get(options, res => {
       res.setEncoding('utf8')
       res.on('data', d => {
-        resoleve(d)
+        resoleve(JSON.parse(d))
       })
     })
     req.on('error', err => {
@@ -25,21 +25,10 @@ const requestBossState = () => {
   })
 }
 
-const setBossStateTo = async bossRaidCache => {
+const setBossStateTo = async (bossRaidCache, staticBossState, redis) => {
   try {
-    const response = await requestBossState()
-    const staticBossState = JSON.parse(response)
     bossRaidCache.bossState = staticBossState.bossRaids[0]
-    await initRaidRecord(bossRaidCache)
-  } catch (err) {
-    throw new ExternalSystemException(err)
-  }
-}
-
-const getBossState = async () => {
-  try {
-    const response = await requestBossState()
-    return JSON.parse(response)
+    await initRaidRecord(bossRaidCache, redis)
   } catch (err) {
     throw new ExternalSystemException(err)
   }
@@ -47,5 +36,5 @@ const getBossState = async () => {
 
 module.exports = {
   setBossStateTo,
-  getBossState,
+  requestBossState,
 }
