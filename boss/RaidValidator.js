@@ -28,7 +28,17 @@ const getLimitTime = createdAt => {
   return datetime
 }
 
+const cacheValid = bossRaidCache => {
+  const NotValidCacheException = require('./exception/NotValidCacheException')
+  if (!bossRaidCache || !Object.hasOwn(bossRaidCache, 'data')) {
+    throw new NotValidCacheException(
+      '보스 레이드 시작 없이 보스 레이드를 종료할 수 없습니다',
+    )
+  }
+}
+
 const isValid = (bossRaidCache, userRaidRecord) => {
+  cacheValid(bossRaidCache)
   const cachedRaidRecordId = bossRaidCache.data.raidRecordId
   const cachedUserId = bossRaidCache.data.userId
   if (
