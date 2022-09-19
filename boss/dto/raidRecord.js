@@ -6,6 +6,7 @@ const getScoreFor = (bossRaidInformation, level) => {
 }
 
 const crateNewRaidBossRecord = (bossRaidInformation, requestRaids) => {
+  standardizeRaidLevel(requestRaids)
   const score = getScoreFor(bossRaidInformation, requestRaids.level)
   return {
     userId: requestRaids.userId,
@@ -51,6 +52,10 @@ const getStartBossRaidInformation = record => {
   }
 }
 
+const standardizeRaidLevel = user => {
+  user.level -= 1
+}
+
 const getUserRanking = (userId, records) => {
   if (!Object.hasOwn(records, 'topRankerInfoList')) {
     return records.filter(record => {
@@ -92,4 +97,5 @@ module.exports = {
   crateEndRaidBossRecord,
   splitToUserRankingAndAllRanking,
   setBossRaidRankCache,
+  standardizeRaidLevel,
 }
