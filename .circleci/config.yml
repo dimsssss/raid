@@ -13,8 +13,8 @@ jobs:
           keys:
             - v1-dependency-{{ checksum "package-lock.json" }}
             - v1-dependency-
-      - run: docker run --name=raid -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=rade -p 6603:3306 -d mysql:latest
-      - run: docker run --name=raid -p 6604:6379 -d redis
+      - run: docker run --name=mysql -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=raid -p 6603:3306 -d mysql:latest
+      - run: docker run --name=redis -p 6604:6379 -d redis
       - node/install:
           node-version: '16.15'
       - run: node --version
