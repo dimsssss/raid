@@ -15,27 +15,33 @@ const createBossRaidRecord = async record => {
   }
 }
 
-/**
- * soft delete. 실제로 삭제되지 않고 deletedAt에 시간이 들어간다
- * @param {*} record
- * @returns
- */
-const updateRaidRecord = async record => {
-  try {
-    const {raidRecords} = db
-    return await raidRecords.update(
-      {state: 'end'},
-      {
-        raw: true,
-        where: {
-          raidRecordId: record.raidRecordId,
-          userId: record.userId,
+const endBossRaid = async record => {
+  return sequelize
+    .transaction(async transaction => {
+      const {raidRecords} = db
+      const deletedRecord = await raidRecords.update(
+        {state: 'end'},
+        {
+          raw: true,
+          where: {
+            raidRecordId: record.raidRecordId,
+            userId: record.userId,
+          },
+          transaction,
         },
-      },
-    )
-  } catch (err) {
-    new ExternalSystemException(err)
-  }
+      )
+      const ranking = await sequelize.query(
+        `SELECT userId, 
+                SUM(score) AS totalScore, 
+                DENSE_RANK() OVER (ORDER BY SUM(score) DESC) - 1 AS ranking 
+           FROM raidRecords WHERE state = 'end' GROUP BY userId ORDER BY ranking ASC;`,
+        {type: Sequelize.QueryTypes.SELECT, raw: true, transaction},
+      )
+      return [deletedRecord, ranking]
+    })
+    .catch(err => {
+      throw new ExternalSystemException(err)
+    })
 }
 
 const findAllUserRecord = async userId => {
@@ -120,7 +126,7 @@ const findLatestRaidRecord = async () => {
 
 module.exports = {
   createBossRaidRecord,
-  updateRaidRecord,
+  endBossRaid,
   findAllUserRecord,
   findRanker,
   findLatestRaidRecord,
