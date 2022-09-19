@@ -76,7 +76,7 @@ https://www.notion.so/dimsss/Boss-Rade-API-fa0b4e4ee7c148028f2fdf66f0a8ab55
 
 ## 🌐 API Document
 
-coming soon
+https://app.swaggerhub.com/apis-docs/dimsssss/raid-api/1.0.0
 
 ## 🧾 실행
 
