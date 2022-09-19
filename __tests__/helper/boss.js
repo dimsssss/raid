@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const db = require('../../bin/database')
+const {redis} = require('../../bin/redis')
 const createRaidRecord = () => {
   return [
     {
@@ -65,7 +66,9 @@ const initData = async () => {
   try {
     const {raidRecords} = db
     const data = createRaidRecord()
-    return await raidRecords.bulkCreate(data, {raw: true})
+    const result = await raidRecords.bulkCreate(data, {raw: true})
+    await setCache()
+    return result
   } catch (err) {
     throw new Error(err)
   }
@@ -109,8 +112,19 @@ const orderByScore = records => {
   return ranks
 }
 
+const setCache = async () => {
+  try {
+    const bossRepository = require('../../boss/infra/bossRepository')
+    const rankers = await bossRepository.findRanker()
+    await redis.set('ranking', JSON.stringify(rankers))
+  } catch (err) {
+    throw new Error()
+  }
+}
+
 module.exports = {
   initData,
   cleanDatabase,
   orderByScore,
+  setCache,
 }
