@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: rade API
+  title: raid API
   description: |-
-    보스 몬스터를 잡은 결과를 Ranking으로 보여주는 서비스입니다
+    보스 몬스터 Raid 정보를 제공하는 API입니다
 servers:
   - url: http://localhost:3000
 tags:

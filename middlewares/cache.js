@@ -1,4 +1,4 @@
-const bossRepository = require('../boss/bossRepository')
+const bossRepository = require('../boss/infra/bossRepository')
 const dto = require('../boss/dto/raidRecord')
 
 const getRaidRecord = async () => {
@@ -9,7 +9,7 @@ const getRaidRecord = async () => {
   }
 }
 
-const initRaidRecord = async bossRaidCache => {
+const initRaidRecord = async (bossRaidCache, redis) => {
   const [cacheRecord, cachedRanking] = await getRaidRecord()
 
   if (cacheRecord) {
@@ -17,7 +17,7 @@ const initRaidRecord = async bossRaidCache => {
   }
   if (cachedRanking) {
     const topRankerInfoList = dto.splitToUserRankingAndAllRanking(cachedRanking)
-
+    redis.set('ranking', JSON.stringify(topRankerInfoList))
     bossRaidCache.ranking = {
       topRankerInfoList,
     }

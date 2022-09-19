@@ -1,6 +1,6 @@
-const {Sequelize} = require('../bin/database')
-const db = require('../bin/database')
-const ExternalSystemException = require('./exception/ExternalSystemException')
+const {Sequelize} = require('../../bin/database')
+const db = require('../../bin/database')
+const ExternalSystemException = require('../exception/ExternalSystemException')
 const {sequelize} = db
 const {Op} = Sequelize
 
