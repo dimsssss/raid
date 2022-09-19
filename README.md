@@ -36,7 +36,13 @@
 docker run --name=raid -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=raid -p 6603:3306 -d mysql:latest
 ```
 
-### 2. 웹 서버 설치
+### 2. redis 설치
+
+```shell
+docker run --name=raid  -p 6604:6379 -d redis
+```
+
+### 3. 웹 서버 설치
 
 ```shell
 git clone https://github.com/dimsssss/raid
