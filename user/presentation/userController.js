@@ -19,7 +19,7 @@ const getUserRaidRecords = async (validator, req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.details)
     }
     const result = await bossService.getUserRaidRecordAndTotalScore(
-      validator.value,
+      validator.value.userId,
     )
     if (result) {
       return res.status(StatusCodes.OK).send(result)
