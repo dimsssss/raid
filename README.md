@@ -36,7 +36,13 @@
 docker run --name=raid -e MYSQL_ROOT_PASSWORD=1234 -e MYSQL_DATABASE=raid -p 6603:3306 -d mysql:latest
 ```
 
-### 2. 웹 서버 설치
+### 2. redis 설치
+
+```shell
+docker run --name=raid  -p 6604:6379 -d redis
+```
+
+### 3. 웹 서버 설치
 
 ```shell
 git clone https://github.com/dimsssss/raid
@@ -76,7 +82,7 @@ https://www.notion.so/dimsss/Boss-Rade-API-fa0b4e4ee7c148028f2fdf66f0a8ab55
 
 ## 🌐 API Document
 
-coming soon
+https://app.swaggerhub.com/apis-docs/dimsssss/raid-api/1.0.0
 
 ## 🧾 실행
 

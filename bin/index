@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+const bossStateAPI = require('./bossStateAPI')
+const app = require('../app')
+const redis = require('./redis')
+const {createServer} = require('./server')
+
+const externalAPIPromise = bossStateAPI.requestBossState()
+const redisInitPromise = redis.init()
+
+Promise.all([externalAPIPromise, redisInitPromise]).then(async result => {
+  const [bossState, redis] = result
+  const bossRaidCache = {}
+  await bossStateAPI.setBossStateTo(bossRaidCache, bossState, redis)
+
+  const port = createServer(app)
+  app.set('port', port)
+  app.set('bossRaidCache', bossRaidCache)
+})

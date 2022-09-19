@@ -88,6 +88,16 @@ const splitToUserRankingAndAllRanking = (records, userId) => {
   return result
 }
 
+const convertTo = rankings => {
+  try {
+    const topRankerInfoList = JSON.parse(rankings[0])
+    const myRankingInfo = JSON.parse(rankings[1])
+    return {topRankerInfoList, myRankingInfo}
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
 module.exports = {
   getPossibleRaidState,
   getImpossibleRaidState,
@@ -98,4 +108,5 @@ module.exports = {
   splitToUserRankingAndAllRanking,
   setBossRaidRankCache,
   standardizeRaidLevel,
+  convertTo,
 }
