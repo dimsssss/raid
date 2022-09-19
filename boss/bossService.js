@@ -1,5 +1,6 @@
 const dto = require('./dto/raidRecord')
 const bossRepository = require('./infra/bossRepository')
+const cacheRepository = require('./infra/cacheRepository')
 const raidValidator = require('./RaidValidator')
 
 const NotValidBossRaidRecordException = require('./exception/NotValidBossRaidRecordException')
@@ -47,7 +48,7 @@ const endBossRaid = async (bossRaidCache, raidRecord) => {
   )
 
   dto.setBossStateCache(bossRaidCache, undefined)
-  dto.setBossRaidRankCache(bossRaidCache, splitResult)
+  await cacheRepository.saveRanking(splitResult, raidRecord.userId)
   return result
 }
 
@@ -56,12 +57,9 @@ const getUserRaidRecordAndTotalScore = async userId => {
   return result
 }
 
-const getRankers = async (bossRaidCache, userId) => {
-  raidValidator.hasRankingData(bossRaidCache)
-  const ranking = dto.splitToUserRankingAndAllRanking(
-    bossRaidCache.ranking,
-    userId,
-  )
+const getRankers = async userId => {
+  const cacheRanking = await cacheRepository.getRanking(userId)
+  const ranking = dto.convertTo(cacheRanking)
   return ranking
 }
 
