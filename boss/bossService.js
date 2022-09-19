@@ -1,5 +1,5 @@
 const dto = require('./dto/raidRecord')
-const bossRepository = require('./bossRepository')
+const bossRepository = require('./infra/bossRepository')
 const raidValidator = require('./RaidValidator')
 
 const NotValidBossRaidRecordException = require('./exception/NotValidBossRaidRecordException')
