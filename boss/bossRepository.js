@@ -44,7 +44,7 @@ const endBossRaid = async record => {
     })
 }
 
-const findAllUserRecord = async userId => {
+const findAllUserRaidRecord = async userId => {
   const {raidRecords} = db
   return await sequelize
     .transaction(async transaction => {
@@ -127,7 +127,7 @@ const findLatestRaidRecord = async () => {
 module.exports = {
   createBossRaidRecord,
   endBossRaid,
-  findAllUserRecord,
+  findAllUserRaidRecord,
   findRanker,
   findLatestRaidRecord,
 }

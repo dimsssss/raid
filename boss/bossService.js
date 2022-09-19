@@ -52,7 +52,7 @@ const endBossRaid = async (bossRaidCache, raidRecord) => {
 }
 
 const getUserRaidRecordAndTotalScore = async userId => {
-  const result = await bossRepository.findAllUserRecord(userId)
+  const result = await bossRepository.findAllUserRaidRecord(userId)
   return result
 }
 
