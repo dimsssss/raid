@@ -38,8 +38,9 @@ const endBossRaid = async (bossRaidCache, raidRecord) => {
   if (raidValidator.isExcedTime(bossRaidCache.data)) {
     throw new ExcedBossRaidTimeException()
   }
-  const result = await bossRepository.updateRaidRecord(bossRaidCache.data)
-  const rankRecord = await bossRepository.findRanker()
+  const [result, rankRecord] = await bossRepository.endBossRaid(
+    bossRaidCache.data,
+  )
   const splitResult = dto.splitToUserRankingAndAllRanking(
     rankRecord,
     raidRecord.userId,
@@ -57,7 +58,11 @@ const getUserRaidRecordAndTotalScore = async userId => {
 
 const getRankers = async (bossRaidCache, userId) => {
   raidValidator.hasRankingData(bossRaidCache)
-  return dto.splitToUserRankingAndAllRanking(bossRaidCache.ranking, userId)
+  const ranking = dto.splitToUserRankingAndAllRanking(
+    bossRaidCache.ranking,
+    userId,
+  )
+  return ranking
 }
 
 module.exports = {
