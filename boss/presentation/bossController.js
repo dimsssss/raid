@@ -48,8 +48,11 @@ const getRankings = async (validator, req, res, next) => {
       return res.status(StatusCodes.BAD_REQUEST).send(validator.error.message)
     }
     const bossRaidCache = req.app.get('bossRaidCache')
-    await bossService.getRankers(bossRaidCache, validator.value.userId)
-    return res.status(StatusCodes.OK).send()
+    const result = await bossService.getRankers(
+      bossRaidCache,
+      validator.value.userId,
+    )
+    return res.status(StatusCodes.OK).send(result)
   } catch (err) {
     return res.status(err.StatusCodes).send(err.message)
   }
