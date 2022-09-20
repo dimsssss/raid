@@ -6,7 +6,7 @@ const getSchema = Joi.object({
 
 const postSchema = Joi.object({
   userId: Joi.number().min(1),
-  level: Joi.number().min(1),
+  level: Joi.number().min(1).max(3),
 })
 
 const postValidator = (req, res, next) => {
