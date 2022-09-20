@@ -16,7 +16,7 @@ module.exports = {
           },
           state: {
             type: Sequelize.DataTypes.ENUM,
-            values: ['start', 'end'],
+            values: ['start', 'end', 'timeout'],
             allowNull: false,
           },
           score: {

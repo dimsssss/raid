@@ -124,10 +124,25 @@ const findLatestRaidRecord = async () => {
     })
 }
 
+const updateStateToTimeout = async raidRecordId => {
+  try {
+    const {raidRecords} = db
+    const result = await raidRecords.update(
+      {state: 'timeout'},
+      {where: {raidRecordId}, raw: true},
+    )
+    return result
+  } catch (err) {
+    console.log(err)
+    throw new ExternalSystemException(err)
+  }
+}
+
 module.exports = {
   createBossRaidRecord,
   endBossRaid,
   findAllUserRaidRecord,
   findRanker,
   findLatestRaidRecord,
+  updateStateToTimeout,
 }

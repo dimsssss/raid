@@ -21,6 +21,10 @@ const startBossRaid = async (bossRaidCache, requestRaids) => {
   if (raidValidator.isRaiding(bossRaidCache.data)) {
     throw new StartBossRaidException(requestRaids.userId)
   }
+  // 최근 boss raid가 종료를 안하고 시간이 초과된 경우
+  if (raidValidator.isExcedTime(bossRaidCache.data)) {
+    await bossRepository.updateStateToTimeout(bossRaidCache.data.raidRecordId)
+  }
 
   const newRecord = dto.crateNewRaidBossRecord(
     bossRaidCache.bossState,

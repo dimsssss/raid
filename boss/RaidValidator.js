@@ -51,10 +51,14 @@ const isValid = (bossRaidCache, userRaidRecord) => {
 }
 
 const isExcedTime = record => {
+  if (!record) {
+    return false
+  }
   const raidStartDate = new Date(record.createdAt)
   raidStartDate.setMinutes(raidStartDate.getMinutes() + 3)
 
   if (record.state === 'start' && Date.now() >= raidStartDate) {
+    console.log('exceed')
     return true
   }
   return false
