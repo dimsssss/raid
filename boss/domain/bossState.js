@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       state: {
         type: DataTypes.ENUM,
         values: ['open', 'close'],
+        defaultValue: 'open',
         allowNull: false,
       },
       createdAt: {
