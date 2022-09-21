@@ -1,0 +1,21 @@
+config:
+  target: 'http://localhost'
+  phases:
+    - duration: 60
+      arrivalRate: 100
+      name: Warm up
+  payload:
+    path: 'users.csv'
+    fields:
+      - 'userId'
+      - 'level'
+    loadAll: true
+
+scenarios:
+  - name: '100명 동시에 raid 요청시 한명만 가능'
+    flow:
+      - post:
+          url: '/bossRaid/enter'
+          json:
+            userId: '{{ userId }}'
+            level: '{{ level }}'
