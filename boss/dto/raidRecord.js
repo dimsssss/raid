@@ -1,3 +1,4 @@
+const BossRaidingException = require('../exception/BossRaidingException')
 const getScoreFor = (bossRaidInformation, level) => {
   const levelInformation = bossRaidInformation.levels.filter(information => {
     return level === information.level
@@ -46,6 +47,9 @@ const setBossRaidRankCache = (bossRaidCache, result) => {
 }
 
 const getStartBossRaidInformation = record => {
+  if (record === undefined) {
+    throw new BossRaidingException()
+  }
   return {
     isEntered: record.state === 'start',
     raidRecordId: record.raidRecordId,

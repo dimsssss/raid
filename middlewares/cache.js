@@ -1,4 +1,5 @@
 const bossRepository = require('../boss/infra/bossRepository')
+const bossStateRepository = require('../boss/infra/bossStateRepository')
 const dto = require('../boss/dto/raidRecord')
 
 const getRaidRecord = async () => {
@@ -11,6 +12,7 @@ const getRaidRecord = async () => {
 
 const initRaidRecord = async (bossRaidCache, redis) => {
   const [cacheRecord, cachedRanking] = await getRaidRecord()
+  await bossStateRepository.initBossState()
 
   if (cacheRecord) {
     bossRaidCache.data = cacheRecord

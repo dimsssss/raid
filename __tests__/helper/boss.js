@@ -64,8 +64,9 @@ const createRaidRecord = () => {
 }
 const initData = async () => {
   try {
-    const {raidRecords} = db
+    const {raidRecords, bossStates} = db
     const data = createRaidRecord()
+    await bossStates.create()
     const result = await raidRecords.bulkCreate(data, {raw: true})
     await setCache()
     return result
@@ -76,8 +77,9 @@ const initData = async () => {
 
 const cleanDatabase = async () => {
   try {
-    const {raidRecords} = db
+    const {raidRecords, bossStates} = db
     await raidRecords.destroy({where: {}, force: true, truncate: true})
+    await bossStates.destroy({where: {}, force: true, truncate: true})
   } catch (err) {
     throw new Error(err)
   }

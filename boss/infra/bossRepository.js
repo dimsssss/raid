@@ -1,18 +1,50 @@
 const {Sequelize} = require('../../bin/database')
 const db = require('../../bin/database')
 const ExternalSystemException = require('../exception/ExternalSystemException')
+const BossRaidingException = require('../exception/BossRaidingException')
 const {sequelize} = db
 const {Op} = Sequelize
 
 const createBossRaidRecord = async record => {
-  try {
-    const {raidRecords} = db
-    return await raidRecords.create(record, {
-      raw: true,
+  return await sequelize
+    .transaction(async transaction => {
+      const {raidRecords, bossStates} = db
+      const bossState = await bossStates.findOne({
+        where: {state: 'open', bossId: 1},
+        transaction,
+        raw: true,
+      })
+
+      if (bossState === null) {
+        throw new BossRaidingException()
+      }
+
+      const updateState = await bossStates.update(
+        {state: 'close'},
+        {
+          where: {
+            state: 'open',
+            bossId: bossState.bossId,
+          },
+          lock: true,
+          raw: true,
+          transaction,
+        },
+      )
+
+      if (updateState[0] === 0) {
+        throw new BossRaidingException()
+      }
+
+      const result = await raidRecords.create(record, {
+        raw: true,
+        transaction,
+      })
+      return result
     })
-  } catch (err) {
-    new ExternalSystemException(err)
-  }
+    .catch(err => {
+      throw new ExternalSystemException(err)
+    })
 }
 
 const endBossRaid = async record => {

@@ -25,16 +25,12 @@ describe('boss raid 통합테스트', () => {
     await helper.cleanDatabase()
   })
 
-  test.each([
-    [
-      {
-        userId: 1,
-        level: 1,
-      },
-    ],
-  ])('level 1 입장이 가능하다', async newRecord => {
+  test('레이드 입장이 가능하다', async () => {
     const {raidRecords} = db
-
+    const newRecord = {
+      userId: 1,
+      level: 1,
+    }
     const bossService = require('../../boss/bossService')
     const result = await bossService.startBossRaid(bossRaidCache, newRecord)
     const record = await raidRecords.findOne({
