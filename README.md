@@ -89,7 +89,7 @@ Sequelize.fn(`ROW_NUMBER() OVER`, Sequelize.col('ORDER BY totalScore')),
 
 ## 비동기 작업 타이밍 맞추기
 
-초기에 Boss state 정보를 가져와야 웹 서버가 실행하게 하고 싶다. 만약에 boss state 정보가 없이 실행되면 이상한 데이터가 저장될 수 있기 때문에 막고 싶었다.
+초기에 Boss state 정보를 가져와야 웹 서버가 실행하게 하고 싶다. raid가 진행중인 상황에서 갑작스런 장애로 서버가 재시작 한다면 데이터 정합성을 위해서 현재 bossState를 가져와서 다시 캐싱을 해야한다
 
 boss state 정보는 https 통신으로 가져오는데 non-blocking으로 동작을한다. 서버를 초기화하는 도중에 non-blocking으로 진행이 되어서 데이터를 가져왔는지 아닌지 확인이 안된 상태에서 서버가 가동되고 있는 상황이다.
 
@@ -142,10 +142,6 @@ bossState라는 객체에 입장 가능여부를 캐싱해 놓고 같은 API가 
 ![스크린샷 2022-09-21 17-30-23.png](./image/2022-09-21-17-30-23.png)
 
 만약 redis로 저장을 하면 어떻게 될것인가. 둘다 저장소가 원격일 경우 네트워크 동작을 하지만 redis는 메모리에 저장을 하고 데이터베이스는 파일에 저장을한다. 파일 입출력보다는 메모리 접근이 빠르기 때문에 단순 계산으로는 레디스로 저장을 하는 것이 성능에 도움이 될것 같다.
-
-## 🔍 이슈 사항들
-
-https://www.notion.so/dimsss/Boss-Rade-API-fa0b4e4ee7c148028f2fdf66f0a8ab55
 
 ## 🌐 API Document
 
