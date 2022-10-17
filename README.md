@@ -1,5 +1,3 @@
-# raid
-
 <p align="center">
     <h1 align="center">
         Raid Ranking API
