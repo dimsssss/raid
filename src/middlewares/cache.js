@@ -1,6 +1,6 @@
-const bossRepository = require('../src/boss/domain/bossRepository')
-const bossStateRepository = require('../src/boss/domain/bossStateRepository')
-const dto = require('../src/boss/dto/raidRecord')
+const bossRepository = require('../boss/domain/bossRepository')
+const bossStateRepository = require('../boss/domain/bossStateRepository')
+const dto = require('../boss/dto/raidRecord')
 
 const getRaidRecord = async () => {
   try {
