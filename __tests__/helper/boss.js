@@ -71,6 +71,7 @@ const initData = async () => {
     await setCache()
     return result
   } catch (err) {
+    console.log(err)
     throw new Error(err)
   }
 }
@@ -116,7 +117,7 @@ const orderByScore = records => {
 
 const setCache = async () => {
   try {
-    const bossRepository = require('../../boss/infra/bossRepository')
+    const bossRepository = require('../../src/boss/domain/bossRepository')
     const rankers = await bossRepository.findRanker()
     await redis.set('ranking', JSON.stringify(rankers))
   } catch (err) {

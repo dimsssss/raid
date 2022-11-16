@@ -3,7 +3,7 @@
 require('dotenv').config()
 
 const https = require('https')
-const ExternalSystemException = require('../boss/exception/ExternalSystemException')
+const ExternalSystemException = require('../src/boss/exception/ExternalSystemException')
 const initRaidRecord = require('../middlewares/cache')
 
 const options = {

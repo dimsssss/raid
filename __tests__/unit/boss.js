@@ -33,7 +33,7 @@ describe('boss raid 확인 테스트', () => {
       {canEnter: true},
     ],
   ])('입력 %p 결과 %p', (stateCache, expected) => {
-    const bossService = require('../../boss/bossService')
+    const bossService = require('../../src/boss/bossService')
     expect(bossService.getBossState(stateCache)).toEqual(expected)
   })
 })

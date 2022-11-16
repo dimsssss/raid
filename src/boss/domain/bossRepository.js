@@ -1,5 +1,5 @@
-const {Sequelize} = require('../../bin/database')
-const db = require('../../bin/database')
+const {Sequelize} = require('../../../bin/database')
+const db = require('../../../bin/database')
 const ExternalSystemException = require('../exception/ExternalSystemException')
 const BossRaidingException = require('../exception/BossRaidingException')
 const {sequelize} = db

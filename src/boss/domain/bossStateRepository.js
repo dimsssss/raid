@@ -1,4 +1,4 @@
-const db = require('../../bin/database')
+const db = require('../../../bin/database')
 const ExternalSystemException = require('../exception/ExternalSystemException')
 
 const initBossState = async () => {
