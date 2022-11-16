@@ -1,12 +1,17 @@
 const dto = require('./dto/raidRecord')
-const bossRepository = require('./infra/bossRepository')
-const cacheRepository = require('./infra/cacheRepository')
+const bossRepository = require('./domain/bossRepository')
+const cacheRepository = require('./domain/cacheRepository')
 const raidValidator = require('./RaidValidator')
 
 const NotValidBossRaidRecordException = require('./exception/NotValidBossRaidRecordException')
 const ExcedBossRaidTimeException = require('./exception/ExcedBossRaidTimeException')
 const StartBossRaidException = require('./exception/StartBossRaidException')
 
+/**
+ *
+ * @param {*} bossRaidCache
+ * @returns { canEnter: boolean }
+ */
 const getBossState = bossRaidCache => {
   if (!raidValidator.hasLatestRaidRecord(bossRaidCache)) {
     return dto.getPossibleRaidState()

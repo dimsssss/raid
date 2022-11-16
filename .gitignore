@@ -105,3 +105,7 @@ dist
 
 # dummy data
 *.csv
+
+# test coverage
+__tests__/coverage
+__tests__/stress

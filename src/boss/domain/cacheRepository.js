@@ -1,4 +1,4 @@
-const {redis} = require('../../bin/redis')
+const {redis} = require('../../../bin/redis')
 
 const saveRanking = async (ranking, userId) => {
   try {

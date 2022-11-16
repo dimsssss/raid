@@ -3,8 +3,8 @@
 require('dotenv').config()
 
 const https = require('https')
-const ExternalSystemException = require('../boss/exception/ExternalSystemException')
-const initRaidRecord = require('../middlewares/cache')
+const ExternalSystemException = require('../src/boss/exception/ExternalSystemException')
+const initRaidRecord = require('../src/middlewares/cache')
 
 const options = {
   hostname: process.env.BOSS_STATE_URL,
