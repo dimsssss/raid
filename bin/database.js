@@ -8,9 +8,9 @@ const path = require('path')
 const Sequelize = require('sequelize')
 const basename = path.basename(__filename)
 const config = require('../config/config')
-const domainLocations = [
-  `${process.cwd()}/user/domain`,
-  `${process.cwd()}/boss/domain`,
+const dataLocations = [
+  `${process.cwd()}/src/user/domain/data`,
+  `${process.cwd()}/src/boss/domain/data`,
 ]
 const db = {}
 
@@ -26,15 +26,15 @@ if (config.use_env_variable) {
   )
 }
 
-domainLocations.forEach(domainLocation => {
-  fs.readdirSync(domainLocation)
+dataLocations.forEach(dataLocation => {
+  fs.readdirSync(dataLocation)
     .filter(file => {
       return (
         file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
       )
     })
     .forEach(file => {
-      const model = require(path.join(domainLocation, file))(
+      const model = require(path.join(dataLocation, file))(
         sequelize,
         Sequelize.DataTypes,
       )

@@ -31,7 +31,7 @@ describe('boss raid 통합테스트', () => {
       userId: 1,
       level: 1,
     }
-    const bossService = require('../../boss/bossService')
+    const bossService = require('../../src/boss/bossService')
     const result = await bossService.startBossRaid(bossRaidCache, newRecord)
     const record = await raidRecords.findOne({
       order: [['raidRecordId', 'DESC']],
@@ -44,7 +44,7 @@ describe('boss raid 통합테스트', () => {
   test('제한 시간이 초과되고 boss raid를 종료하면 예외를 반환한다', async () => {
     const exceedTimeRecord = raidRecords[4]
     bossRaidCache.data = exceedTimeRecord
-    const bossService = require('../../boss/bossService')
+    const bossService = require('../../src/boss/bossService')
     const record = {
       userId: exceedTimeRecord.userId,
       raidRecordId: exceedTimeRecord.raidRecordId,
@@ -55,7 +55,7 @@ describe('boss raid 통합테스트', () => {
   })
 
   test('boss raid를 랭킹을 조회할 수 있다', async () => {
-    const bossService = require('../../boss/bossService')
+    const bossService = require('../../src/boss/bossService')
     const orderedRanks = helper.orderByScore(raidRecords)
     await redis.set(
       `userId:1`,
@@ -82,7 +82,7 @@ describe('boss raid 통합테스트', () => {
     const raidRecord = raidRecords[6]
     const newBossRaidCache = Object.assign(bossRaidCache)
     newBossRaidCache.data = raidRecord
-    const bossService = require('../../boss/bossService')
+    const bossService = require('../../src/boss/bossService')
     const record = {
       userId: raidRecord.userId,
       raidRecordId: raidRecord.raidRecordId,
@@ -94,7 +94,7 @@ describe('boss raid 통합테스트', () => {
   })
 
   test('한명의 유저에 대한 레이드 기록을 조회할 수 있다', async () => {
-    const bossService = require('../../boss/bossService')
+    const bossService = require('../../src/boss/bossService')
     const userId = 1
     let userRecordCount = 0
     const totalScore = raidRecords.reduce((accumulate, record) => {
