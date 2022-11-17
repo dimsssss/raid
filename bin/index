@@ -13,7 +13,6 @@ Promise.all([externalAPIPromise, redisInitPromise]).then(async result => {
   const bossRaidCache = {}
   await bossStateAPI.setBossStateTo(bossRaidCache, bossState, redis)
 
-  const port = createServer(app)
-  app.set('port', port)
+  createServer(app)
   app.set('bossRaidCache', bossRaidCache)
 })
