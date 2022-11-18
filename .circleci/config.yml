@@ -49,7 +49,7 @@ jobs:
           name: Install awscli
           command: pip install awscli
 
-      - run
+      - run:
           name: zip
           command: zip source.zip ./project/bin/* ./project/src/* ./project/app.js ./project/package.json ./project/config/config.js
       - run: # Deploy to S3 using the sync command
