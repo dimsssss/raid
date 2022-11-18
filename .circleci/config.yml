@@ -52,7 +52,7 @@ jobs:
 
       - run:
           name: zip
-          command: zip ./source.zip ./project/bin/* ./project/src/* ./project/app.js ./project/package.json ./project/config/config.js
+          command: zip ./source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
 
       - run:
           name: file access
