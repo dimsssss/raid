@@ -51,10 +51,15 @@ jobs:
 
       - run:
           name: zip
-          command: zip source.zip ./project/bin/* ./project/src/* ./project/app.js ./project/package.json ./project/config/config.js
+          command: zip ./source.zip ./project/bin/* ./project/src/* ./project/app.js ./project/package.json ./project/config/config.js
+
+      - run:
+          name: file access
+          command: chmod 755 ./source.zip
+
       - run: # Deploy to S3 using the sync command
           name: Deploy to S3
-          command: aws s3 sync ./proejct s3://raid-deployment/build/
+          command: aws s3 sync ./source.zip s3://raid-deployment/build/
 
 workflows:
   build-deploy:
