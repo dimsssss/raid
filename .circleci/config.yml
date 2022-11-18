@@ -57,7 +57,7 @@ jobs:
 
       - run:
           name: zip
-          command: zip ~/build/source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
+          command: zip -r ~/build/source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
 
       - run:
           name: file access
@@ -65,7 +65,7 @@ jobs:
 
       - run: # Deploy to S3 using the sync command
           name: Deploy to S3
-          command: aws s3 sync ~/build s3://raid-deployment/build
+          command: aws s3 sync ~/build s3://raid-deployment/build --delete
 workflows:
   build-deploy:
     jobs:
