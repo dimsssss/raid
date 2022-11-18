@@ -47,10 +47,14 @@ jobs:
     steps:
       - run: # Install the AWS CLI if it is not already included in the docker image
           name: Install awscli
-          command: sudo pip install awscli
+          command: pip install awscli
+
+      - run:
+          name: zip
+          command: zip source.zip ./project/bin/* ./project/src/* ./project/app.js ./project/package.json ./project/config/config.js
       - run: # Deploy to S3 using the sync command
           name: Deploy to S3
-          command: aws s3 sync ./ s3://raid-deployment/build/
+          command: aws s3 sync ./proejct s3://raid-deployment/build/
 
 workflows:
   build-deploy:
