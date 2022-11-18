@@ -7,10 +7,10 @@ const http = require('http')
 const createServer = app => {
   const server = http.createServer(app)
   const port = normalizePort(process.env.PORT || '3000')
+
   server.listen(port)
   server.on('error', onError.bind(null, port))
   server.on('listening', onListening.bind(null, server))
-  return port
 }
 
 function normalizePort(val) {
