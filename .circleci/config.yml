@@ -5,7 +5,7 @@ version: 2.1
 orbs:
   git-shallow-clone: guitarrapc/git-shallow-clone@2.4.0
   node: circleci/node@5.0.2
-  aws-code-deploy: circleci/aws-code-deploy@x.y.z # Use the AWS CodeDeploy orb in your configuration
+  aws-code-deploy: circleci/aws-code-deploy@2.0.0 # Use the AWS CodeDeploy orb in your configuration
 
 jobs:
   build:
@@ -66,15 +66,6 @@ jobs:
       - run: # Deploy to S3 using the sync command
           name: Deploy to S3
           command: aws s3 sync ~/build s3://raid-deployment/build
-
-  code_deploy:
-    - aws-code-deploy/deploy:
-        application-name: ${CODE_DEPLOY_APPLICATION}
-        deployment-group: ${CODE_DEPLOY_GROUP} # The name of a new deployment group for the specified application.
-        service-role-arn: ${CODE_DEPLOY_SERVICE_ROLE} # The service role for a deployment group.
-        bundle-bucket: ${CODE_DEPLOY_BUCKET} # The s3 bucket where an application revision will be stored.
-        bundle-key: ${CODE_DEPLOY_BUCKET_KEY} # A ke
-
 workflows:
   build-deploy:
     jobs:
@@ -85,4 +76,9 @@ workflows:
           filters:
             branches:
               only: main # Only deploy when the commit is on the Main branch
-      - code_deploy
+      - aws-code-deploy/deploy:
+          application-name: ${CODE_DEPLOY_APPLICATION}
+          deployment-group: ${CODE_DEPLOY_GROUP} # The name of a new deployment group for the specified application.
+          service-role-arn: ${CODE_DEPLOY_SERVICE_ROLE} # The service role for a deployment group.
+          bundle-bucket: ${CODE_DEPLOY_BUCKET} # The s3 bucket where an application revision will be stored.
+          bundle-key: ${CODE_DEPLOY_BUCKET_KEY} # A ke
