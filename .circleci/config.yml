@@ -56,7 +56,7 @@ jobs:
 
       - run:
           name: file access
-          command: chmod 755 ./source.zip
+          command: chmod 755 ~/source.zip
 
       - run: # Deploy to S3 using the sync command
           name: Deploy to S3
