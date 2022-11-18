@@ -45,6 +45,7 @@ jobs:
   deploy:
     machine: true
     steps:
+      - checkout
       - run: # Install the AWS CLI if it is not already included in the docker image
           name: Install awscli
           command: pip install awscli
