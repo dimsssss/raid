@@ -49,10 +49,11 @@ jobs:
       - run: # Install the AWS CLI if it is not already included in the docker image
           name: Install awscli
           command: pip install awscli
-
+      - run:
+          name: create build path
+          command: mkdir ~/build
       - run:
           name: zip
-          command: mkdir ~/build
           command: zip ~/build/source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
 
       - run:
