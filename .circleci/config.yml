@@ -51,6 +51,10 @@ jobs:
           command: pip install awscli
 
       - run:
+          name: create build path
+          command: mkdir ~/build
+
+      - run:
           name: zip
           command: zip ~/build/source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
 
