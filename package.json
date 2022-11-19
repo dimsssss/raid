@@ -6,7 +6,7 @@
     "test": "jest",
     "dev": "nodemon 1s ./bin/index",
     "stop": "pm2 kill",
-    "production:start": "pm2 ./bin/index"
+    "production:start": "pm2 ~/app/bin/index"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
