@@ -5,3 +5,12 @@ files:
     destination: /home/ec2-user/app
     overwrite: yes
     runas: ec-user
+
+permissions:
+  - object: /
+    pattern: '**'
+    owner: ec2-user
+
+hooks:
+  ApplicationStart:
+    - location: start_server.sh
