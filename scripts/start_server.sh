@@ -1,3 +1,4 @@
 #!/bin/bash
 
-echo "start server"
+pm2 kill
+pm2 start ./bin/index
