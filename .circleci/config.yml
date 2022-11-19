@@ -57,4 +57,4 @@ workflows:
           deployment-group: ${CODE_DEPLOY_GROUP} # The name of a new deployment group for the specified application.
           service-role-arn: ${CODE_DEPLOY_SERVICE_ROLE} # The service role for a deployment group.
           bundle-bucket: ${CODE_DEPLOY_BUCKET} # The s3 bucket where an application revision will be stored.
-          bundle-key: ${CODE_DEPLOY_BUCKET_KEY} # A ke
+          bundle-key: ${CODE_DEPLOY_BUCKET_KEY}
