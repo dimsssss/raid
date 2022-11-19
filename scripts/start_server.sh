@@ -10,6 +10,8 @@ nvm install 16.18.1
 
 node -e "console.log('Running Node.js ' + process.version)"
 
+cd app
+
 npm install
 
 pm2 kill
