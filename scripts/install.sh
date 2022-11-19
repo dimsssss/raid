@@ -10,3 +10,5 @@ nvm install 16.18.1
 node -e "console.log('Running Node.js ' + process.version)"
 
 npm install
+
+ls -al
