@@ -1,3 +1,5 @@
 #!/bin/bash
 
-npm run production:start
+pm2 stop all
+
+pm2 start ~/app/bin/index
