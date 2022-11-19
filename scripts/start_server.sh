@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pm2 kill
+npm run stop
 
-pm2 start ./bin/index
+npm run production:start
