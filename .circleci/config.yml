@@ -43,39 +43,39 @@ jobs:
             cat .env
             npx sequelize-cli db:migrate
             npm run test
-  deploy:
-    machine: true
-    steps:
-      - checkout
-      - run: # Install the AWS CLI if it is not already included in the docker image
-          name: Install awscli
-          command: pip install awscli
+  # deploy:
+  #   machine: true
+  #   steps:
+  #     - checkout
+  #     - run: # Install the AWS CLI if it is not already included in the docker image
+  #         name: Install awscli
+  #         command: pip install awscli
 
-      # - run:
-      #     name: create build path
-      #     command: mkdir ~/build
+  # - run:
+  #     name: create build path
+  #     command: mkdir ~/build
 
-      # - run:
-      #     name: zip
-      #     command: zip -r ~/build/source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
+  # - run:
+  #     name: zip
+  #     command: zip -r ~/build/source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
 
-      # - run:
-      #     name: file access
-      #     command: chmod 755 ~/build/source.zip
+  # - run:
+  #     name: file access
+  #     command: chmod 755 ~/build/source.zip
 
-      - run: # Deploy to S3 using the sync command
-          name: Deploy to S3
-          command: aws s3 sync ~/build s3://raid-deployment/build --delete
+  # - run: # Deploy to S3 using the sync command
+  #     name: Deploy to S3
+  #     command: aws s3 sync ~/build s3://raid-deployment/build --delete
 workflows:
   build-deploy:
     jobs:
       - build
-      - deploy:
-          requires:
-            - build # Only run deploy job once the build job has completed
-          filters:
-            branches:
-              only: main # Only deploy when the commit is on the Main branch
+      # - deploy:
+      #     requires:
+      #       - build # Only run deploy job once the build job has completed
+      #     filters:
+      #       branches:
+      #         only: main # Only deploy when the commit is on the Main branch
       - aws-code-deploy/deploy:
           requires:
             - build # Only run deploy job once the build job has completed
