@@ -1,7 +1,8 @@
 #!/bin/bash
 
+nvm use 16.18.1
 
-ls -al
+cd ~/app
 
 npm run stop
 
