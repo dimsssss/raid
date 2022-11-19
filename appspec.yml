@@ -17,3 +17,8 @@ hooks:
     - location: scripts/start_server.sh
       timeout: 60
       runas: ec2-user
+
+  BeforeInstall:
+    - location: scripts/install.sh
+      timeout: 60
+      runas: ec2-user
