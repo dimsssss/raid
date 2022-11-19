@@ -1,11 +1,9 @@
 #!/bin/bash
 echo "module init"
 
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 
-. ~/.nvm/nvm.sh
-
-nvm install 16.18.1
+sudo yum install -y nodejs npm
 
 node -e "console.log('Running Node.js ' + process.version)"
 
