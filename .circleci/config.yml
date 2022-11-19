@@ -51,17 +51,17 @@ jobs:
           name: Install awscli
           command: pip install awscli
 
-      - run:
-          name: create build path
-          command: mkdir ~/build
+      # - run:
+      #     name: create build path
+      #     command: mkdir ~/build
 
-      - run:
-          name: zip
-          command: zip -r ~/build/source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
+      # - run:
+      #     name: zip
+      #     command: zip -r ~/build/source.zip ./bin/* ./src/* ./app.js ./package.json ./config/config.js
 
-      - run:
-          name: file access
-          command: chmod 755 ~/build/source.zip
+      # - run:
+      #     name: file access
+      #     command: chmod 755 ~/build/source.zip
 
       - run: # Deploy to S3 using the sync command
           name: Deploy to S3
