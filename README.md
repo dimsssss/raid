@@ -71,6 +71,8 @@ Sequelize.fn(`ROW_NUMBER() OVER`, Sequelize.col('ORDER BY totalScore')),
 
 다양한 프레임워크가 이를 지원하는데 version 값을 두어서 트랜잭션이 커밋할 때 version이 변경되었는지 아닌지를 확인후 시작할 때 version이 그대로라면(다른 트랜잭션이 데이터를 수정하지 않았다면) 트랜잭션은 커밋을 하고 그렇지 않는다면 롤백을 한다.
 
+https://product.kyobobook.co.kr/detail/S000001766328
+
 낙관적락으로 해결하려고 했지만 상황이 여의치 않았다. 사용하는 ORM 공식문서에 나와있는데로 version을 설정했지만 설명대로 특정 예외를 발생시키지 않아서 사용할 수 없었다.
 
 https://sequelize.org/docs/v6/other-topics/optimistic-locking/
