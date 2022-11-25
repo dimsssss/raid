@@ -1,5 +1,7 @@
 #!/bin/bash
 
-pm2 stop all
+# pm2 stop all
 
-pm2 start ~/app/bin/index
+# pm2 start ~/app/bin/index
+
+echo "Application Start"
