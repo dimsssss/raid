@@ -3,7 +3,6 @@ os: linux
 files:
   - source: /
     destination: /home/ec2-user/app
-    runas: ec2-user
 
 file_exists_behavior: OVERWRITE
 
