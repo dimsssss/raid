@@ -77,7 +77,7 @@ https://product.kyobobook.co.kr/detail/S000001766328
 
 https://sequelize.org/docs/v6/other-topics/optimistic-locking/
 
-### 충돌 구체화를 이용한 방법
+### 락 보관 역할을 하는 테이블 추가
 
 잠금을 얻기 위한 테이블을 추가하였다. 잠금에 대한 row를 생성하고 row의 특정 컬럼이 false이면 레이드 로그 테이블에 행을 삽입한다. 이 방법으로 동시성을 해결하였는데 단점은 어플리케이션의 모델 부분의 코드가 지저분해진다. 동시성을 제어하기 위한 코드가 모델 코드에 들어가기 때문이다.
 
