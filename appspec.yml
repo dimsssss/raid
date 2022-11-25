@@ -3,8 +3,6 @@ os: linux
 files:
   - source: /
     destination: /home/ec2-user/app
-    overwrite: yes
-    runas: ec2-user
 # permissions:
 #   - object: /
 #     pattern: '**'
